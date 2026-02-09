@@ -1,10 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TaskManager.Storage.Enums;
 
 namespace TaskManager.Storage.Entities
 {
-    internal class TaskRecord
+    public class TaskRecord
     {
+        public int Id { get; }
+        public int ProjectId { get; }
+        public string Title { get; private set; }
+        public string Description { get; private set; }
+        public Priority Priority { get; private set; }
+        public DateTime DueDate { get; private set; }
+        public bool Finished { get; private set; }
+
+        public TaskRecord(
+            int id,
+            int projectId,
+            string title, 
+            string desc, 
+            Priority priority,
+            DateTime dueDate,
+            bool finished)
+        {
+            Id = id;
+            ProjectId = projectId;
+            Title = title;
+            Description = desc;
+            Priority = priority;
+            DueDate = dueDate;
+            Finished = finished;
+        }
+
+        public void UpdateRecord(
+            string title, 
+            string desc, 
+            Priority priority,
+            DateTime dueDate,
+            bool finished)
+        {
+            Title = title
+            Description = desc;
+            Priority = priority;
+            DueDate = dueDate;
+            Finished = finished;
+        }
     }
 }
