@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.Services\TaskManager.Services.csproj">
+      <Project>{8df58723-efb9-ed45-9ab1-17956041c67f}</Project>
+      <Name>TaskManager.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

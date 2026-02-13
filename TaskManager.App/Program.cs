@@ -3,13 +3,106 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Services;
 
 namespace TaskManager.App
 {
-    internal class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static readonly RepositoryService Repo = new();
+        static void Main()
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            while(true)
+            {
+                Console.Clear();
+                var projects = Repo.GetProjects();
+
+                Console.WriteLine("Проєкти:");
+                foreach (var p in projects)
+                {
+                    Console.WriteLine($"{p.Id}. [{p.Type}] {p.Name} — {p.ProgressPercent}% ({p.DoneTasks}/{p.TotalTasks})");
+                }
+                Console.WriteLine();
+                Console.Write("Введи ID проєкту для перегляду, або Q для виходу: ");
+                var input = Console.ReadLine()?.Trim();
+
+                if (string.Equals(input, "Q", StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                if (!int.TryParse(input, out var projectId) || projects.All(p => p.Id != projectId))
+                    continue;
+
+                ShowProject(projectId);
+            }
+        }
+
+        private static void ShowProject(int projectId)
+        {
+            while (true)
+            {
+                Console.Clear();
+                var projects = Repo.GetProjects();
+                var project = projects.First(p => p.Id == projectId);
+
+                Console.WriteLine($"=== Проєкт #{project.Id}: {project.Name} ===");
+                Console.WriteLine($"Тип: {project.Type}");
+                Console.WriteLine($"Опис: {project.ShortDescription}");
+                Console.WriteLine($"Прогрес: {project.ProgressPercent}% ({project.DoneTasks}/{project.TotalTasks})");
+                Console.WriteLine();
+
+                var tasks = Repo.GetTasksByProject(projectId);
+                if (tasks.Count == 0)
+                {
+                    Console.WriteLine("Завдань поки немає.");
+                }
+                else
+                {
+                    Console.WriteLine("Завдання (priority ↓, due ↑):");
+                    foreach (var t in tasks)
+                    {
+                        var status = t.IsDone ? "DONE" : (t.IsOverdue ? "OVERDUE" : "TODO");
+                        Console.WriteLine($"{t.Id} | {status,-7} | {t.Priority,-8} | due {t.DueDate:yyyy-MM-dd} | {t.Title}");
+                    }
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Команди: [ID задачі] деталі | R оновити | B назад");
+                Console.Write(">> ");
+                var cmd = Console.ReadLine()?.Trim();
+
+                if (string.Equals(cmd, "B", StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                if (string.Equals(cmd, "R", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                if (int.TryParse(cmd, out var taskId))
+                {
+                    var task = Repo.GetTask(taskId);
+                    if (task is not null && task.ProjectId == projectId)
+                        ShowTask(task);
+                }
+            }
+        }
+
+        private static void ShowTask(TaskManager.Views.TaskView task)
+        {
+            Console.Clear();
+            Console.WriteLine($"=== Завдання #{task.Id} ===");
+            Console.WriteLine($"ProjectId: {task.ProjectId}");
+            Console.WriteLine($"Title: {task.Title}");
+            Console.WriteLine($"Priority: {task.Priority}");
+            Console.WriteLine($"Due: {task.DueDate:yyyy-MM-dd}");
+            Console.WriteLine($"Done: {task.IsDone}");
+            Console.WriteLine($"Overdue: {task.IsOverdue}");
+            Console.WriteLine();
+            Console.WriteLine("Опис:");
+            Console.WriteLine(task.Description);
+            Console.WriteLine();
+            Console.Write("Enter щоб повернутися...");
+            Console.ReadLine();
         }
     }
 }
