@@ -13,7 +13,7 @@ namespace TaskManager.Storage.Entities
         public string Description { get; private set; }
         public Priority Priority { get; private set; }
         public DateTime DueDate { get; private set; }
-        public bool Finished { get; private set; }
+        public bool IsFinished { get; private set; }
 
         public TaskRecord(
             int id,
@@ -30,7 +30,7 @@ namespace TaskManager.Storage.Entities
             Description = desc;
             Priority = priority;
             DueDate = dueDate;
-            Finished = finished;
+            IsFinished = finished;
         }
 
         public void UpdateRecord(
@@ -40,11 +40,11 @@ namespace TaskManager.Storage.Entities
             DateTime dueDate,
             bool finished)
         {
-            Title = title
+            Title = title;
             Description = desc;
             Priority = priority;
             DueDate = dueDate;
-            Finished = finished;
+            IsFinished = finished;
         }
     }
 }

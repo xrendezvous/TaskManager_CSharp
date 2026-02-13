@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="TaskManager.App/TaskManager.App.csproj" />
+  <Project Path="TaskManager.App/TaskManager.App.csproj" Id="f2987301-b9f8-4aab-a744-b6bb5a896850" />
   <Project Path="TaskManager.Properties/TaskManager.Views.csproj" />
   <Project Path="TaskManager.Services/TaskManager.Services.csproj" />
   <Project Path="TaskManager.Storage/TaskManager.Storage.csproj" />
