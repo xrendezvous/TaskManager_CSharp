@@ -14,7 +14,7 @@ namespace TaskManager.App
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            while(true)
+            while (true)
             {
                 Console.Clear();
                 var projects = Repo.GetProjects();
@@ -22,7 +22,7 @@ namespace TaskManager.App
                 Console.WriteLine("Projects:");
                 foreach (var p in projects)
                 {
-                    Console.WriteLine($"{p.Id}. [{p.Type}] {p.Name} — {p.ProgressPercent}% ({p.DoneTasks}/{p.TotalTasks})");
+                    Console.WriteLine($"{p.Id}. [{p.Type}] {p.Name} — {p.Progress}% ({p.FinishedTasks}/{p.TasksAmount})");
                 }
                 Console.WriteLine();
                 Console.Write("Enter project ID for checking, or letter Q for exit: ");
@@ -48,11 +48,11 @@ namespace TaskManager.App
 
                 Console.WriteLine($"=== Project #{project.Id}: {project.Name} ===");
                 Console.WriteLine($"Type: {project.Type}");
-                Console.WriteLine($"Desc: {project.ShortDescription}");
-                Console.WriteLine($"Progress: {project.ProgressPercent}% ({project.DoneTasks}/{project.TotalTasks})");
+                Console.WriteLine($"Desc: {project.Description}");
+                Console.WriteLine($"Progress: {project.Progress}% ({project.FinishedTasks}/{project.TasksAmount})");
                 Console.WriteLine();
 
-                var tasks = Repo.GetTasksByProject(projectId);
+                var tasks = Repo.GetTasksByProjects(projectId);
                 if (tasks.Count == 0)
                 {
                     Console.WriteLine("No tasks found in this project.");
@@ -62,7 +62,7 @@ namespace TaskManager.App
                     Console.WriteLine("List of tasks (priority ↓, due ↑):");
                     foreach (var t in tasks)
                     {
-                        var status = t.IsDone ? "DONE" : (t.IsOverdue ? "OVERDUE" : "TODO");
+                        var status = t.IsFinished ? "DONE" : (t.IsOverdue ? "OVERDUE" : "TODO");
                         Console.WriteLine($"{t.Id} | {status,-7} | {t.Priority,-8} | due {t.DueDate:yyyy-MM-dd} | {t.Title}");
                     }
                 }
@@ -95,7 +95,7 @@ namespace TaskManager.App
             Console.WriteLine($"Title: {task.Title}");
             Console.WriteLine($"Priority: {task.Priority}");
             Console.WriteLine($"Due: {task.DueDate:yyyy-MM-dd}");
-            Console.WriteLine($"Done: {task.IsDone}");
+            Console.WriteLine($"Done: {task.IsFinished}");
             Console.WriteLine($"Overdue: {task.IsOverdue}");
             Console.WriteLine();
             Console.WriteLine("Desc:");
@@ -106,3 +106,4 @@ namespace TaskManager.App
         }
     }
 }
+
