@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TaskManager.Storage.Entities;
+﻿using TaskManager.Storage.Entities;
 using TaskManager.Storage.Enums;
 
 namespace TaskManager.Services
 {
-    internal class DataStorage
+    internal static class DataStorage
     {
         internal static List<ProjectRecord> Projects = new()
         {
@@ -17,6 +14,11 @@ namespace TaskManager.Services
 
         internal static List<TaskRecord> Tasks = new()
         {
+            new TaskRecord(101, 1, "Section 1 Plan", "Update structure", Priority.High, DateTime.Today.AddDays(2), false),
+            new TaskRecord(102, 1, "Find 10 sources", "Articles and books", Priority.Medium, DateTime.Today.AddDays(5), false),
+            new TaskRecord(103, 1, "Baseline experiment", "TF-IDF and logreg", Priority.Critical, DateTime.Today.AddDays(-1), false),
+            new TaskRecord(104, 1, "Create graphs", "Matplotlib", Priority.Medium, DateTime.Today.AddDays(7), false),
+            new TaskRecord(105, 1, "Conclusions for the section", "2-3 pages", Priority.High, DateTime.Today.AddDays(10), false),
             new TaskRecord(106, 1, "Code refactoring", "Move utils", Priority.Low, DateTime.Today.AddDays(14), true),
             new TaskRecord(107, 1, "Desc of dataset", "Fields, size etc.", Priority.Medium, DateTime.Today.AddDays(4), true),
             new TaskRecord(108, 1, "Metrics", "Accuracy/F1/AUC", Priority.High, DateTime.Today.AddDays(6), false),

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using TaskManager.Services;
+using TaskManager.Views;
 
 namespace TaskManager.App
 {
@@ -12,7 +9,7 @@ namespace TaskManager.App
         private static readonly RepositoryService Repo = new();
         static void Main()
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
 
             while (true)
             {
@@ -87,7 +84,7 @@ namespace TaskManager.App
             }
         }
 
-        private static void ShowTask(TaskManager.Views.TaskView task)
+        private static void ShowTask(TaskView task)
         {
             Console.Clear();
             Console.WriteLine($"=== Task #{task.Id} ===");

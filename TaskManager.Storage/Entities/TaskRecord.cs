@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TaskManager.Storage.Enums;
+﻿using TaskManager.Storage.Enums;
 
 namespace TaskManager.Storage.Entities
 {

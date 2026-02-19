@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TaskManager.Views;
+﻿using TaskManager.Views;
 
 namespace TaskManager.Services
 {

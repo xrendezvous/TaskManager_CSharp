@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TaskManager.Storage.Enums;
+﻿using TaskManager.Storage.Enums;
 
 namespace TaskManager.Views
 {
@@ -13,7 +10,7 @@ namespace TaskManager.Views
         public TypeOfProject Type { get; }
         public int TasksAmount { get; }
         public int FinishedTasks { get; }
-        public int Progress => TasksAmount == 0 ? 0 : (int)Math.Round(FinishedTasks * 100.0 / FinishedTasks);
+        public int Progress => TasksAmount == 0 ? 0 : (int)Math.Round(FinishedTasks * 100.0 / TasksAmount);
         public ProjectView(
             int id,
             string name,
