@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TaskManager.Storage.Entities;
 using TaskManager.Views;
-using TaskManager.Services;
 
 namespace TaskManager.Services
 {

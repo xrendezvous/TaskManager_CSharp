@@ -5,7 +5,7 @@ using TaskManager.Storage.Enums;
 
 namespace TaskManager.Storage.Entities
 {
-    public class ProjectRecord
+    public sealed class ProjectRecord
     {
         public int Id { get; }
         public string Name { get; private set; }

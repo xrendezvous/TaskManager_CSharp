@@ -19,13 +19,13 @@ namespace TaskManager.App
                 Console.Clear();
                 var projects = Repo.GetProjects();
 
-                Console.WriteLine("Проєкти:");
+                Console.WriteLine("Projects:");
                 foreach (var p in projects)
                 {
                     Console.WriteLine($"{p.Id}. [{p.Type}] {p.Name} — {p.ProgressPercent}% ({p.DoneTasks}/{p.TotalTasks})");
                 }
                 Console.WriteLine();
-                Console.Write("Введи ID проєкту для перегляду, або Q для виходу: ");
+                Console.Write("Enter project ID for checking, or letter Q for exit: ");
                 var input = Console.ReadLine()?.Trim();
 
                 if (string.Equals(input, "Q", StringComparison.OrdinalIgnoreCase))
@@ -46,20 +46,20 @@ namespace TaskManager.App
                 var projects = Repo.GetProjects();
                 var project = projects.First(p => p.Id == projectId);
 
-                Console.WriteLine($"=== Проєкт #{project.Id}: {project.Name} ===");
-                Console.WriteLine($"Тип: {project.Type}");
-                Console.WriteLine($"Опис: {project.ShortDescription}");
-                Console.WriteLine($"Прогрес: {project.ProgressPercent}% ({project.DoneTasks}/{project.TotalTasks})");
+                Console.WriteLine($"=== Project #{project.Id}: {project.Name} ===");
+                Console.WriteLine($"Type: {project.Type}");
+                Console.WriteLine($"Desc: {project.ShortDescription}");
+                Console.WriteLine($"Progress: {project.ProgressPercent}% ({project.DoneTasks}/{project.TotalTasks})");
                 Console.WriteLine();
 
                 var tasks = Repo.GetTasksByProject(projectId);
                 if (tasks.Count == 0)
                 {
-                    Console.WriteLine("Завдань поки немає.");
+                    Console.WriteLine("No tasks found in this project.");
                 }
                 else
                 {
-                    Console.WriteLine("Завдання (priority ↓, due ↑):");
+                    Console.WriteLine("List of tasks (priority ↓, due ↑):");
                     foreach (var t in tasks)
                     {
                         var status = t.IsDone ? "DONE" : (t.IsOverdue ? "OVERDUE" : "TODO");
@@ -68,7 +68,7 @@ namespace TaskManager.App
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("Команди: [ID задачі] деталі | R оновити | B назад");
+                Console.WriteLine("Enter command: [task ID] for details | R to update | B go back");
                 Console.Write(">> ");
                 var cmd = Console.ReadLine()?.Trim();
 
@@ -90,7 +90,7 @@ namespace TaskManager.App
         private static void ShowTask(TaskManager.Views.TaskView task)
         {
             Console.Clear();
-            Console.WriteLine($"=== Завдання #{task.Id} ===");
+            Console.WriteLine($"=== Task #{task.Id} ===");
             Console.WriteLine($"ProjectId: {task.ProjectId}");
             Console.WriteLine($"Title: {task.Title}");
             Console.WriteLine($"Priority: {task.Priority}");
@@ -98,10 +98,10 @@ namespace TaskManager.App
             Console.WriteLine($"Done: {task.IsDone}");
             Console.WriteLine($"Overdue: {task.IsOverdue}");
             Console.WriteLine();
-            Console.WriteLine("Опис:");
+            Console.WriteLine("Desc:");
             Console.WriteLine(task.Description);
             Console.WriteLine();
-            Console.Write("Enter щоб повернутися...");
+            Console.Write("Press Enter to go back...");
             Console.ReadLine();
         }
     }

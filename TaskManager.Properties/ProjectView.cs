@@ -5,7 +5,7 @@ using TaskManager.Storage.Enums;
 
 namespace TaskManager.Views
 {
-    public class ProjectView
+    public sealed class ProjectView
     {
         public int Id { get; }
         public string Name { get; }
