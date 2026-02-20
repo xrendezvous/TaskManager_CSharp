@@ -4,6 +4,10 @@ using TaskManager.Views;
 
 namespace TaskManager.App
 {
+    /*
+     * Клас консольного застосунку, що відповідає за взаємодію з користувачем
+     * Використовує RepositoryService для отримання даних
+     */
     internal static class Program
     {
         private static readonly RepositoryService Repo = new();
@@ -28,13 +32,30 @@ namespace TaskManager.App
                 if (string.Equals(input, "Q", StringComparison.OrdinalIgnoreCase))
                     return;
 
-                if (!int.TryParse(input, out var projectId) || projects.All(p => p.Id != projectId))
+                if (!int.TryParse(input, out var projectId))
+                {
+                    Console.WriteLine("Invalid project ID format. Press Enter to try again");
+                    Console.ReadLine();
                     continue;
+                }
+
+                var project = projects.FirstOrDefault(p => p.Id == projectId);
+
+                if (project is null)
+                {
+                    Console.WriteLine("Project with this ID does not exist. Press Enter to try again");
+                    Console.ReadLine();
+                    continue;
+                }
 
                 ShowProject(projectId);
             }
         }
 
+        /*
+         * Відповідає за відображення інформації про проєкт,
+         * також показує список завдань в проєкті
+         */
         private static void ShowProject(int projectId)
         {
             while (true)
@@ -52,11 +73,11 @@ namespace TaskManager.App
                 var tasks = Repo.GetTasksByProjects(projectId);
                 if (tasks.Count == 0)
                 {
-                    Console.WriteLine("No tasks found in this project.");
+                    Console.WriteLine("No tasks found in this project");
                 }
                 else
                 {
-                    Console.WriteLine("List of tasks (priority ↓, due ↑):");
+                    Console.WriteLine("List of tasks:");
                     foreach (var t in tasks)
                     {
                         var status = t.IsFinished ? "DONE" : (t.IsOverdue ? "OVERDUE" : "TODO");
@@ -75,15 +96,33 @@ namespace TaskManager.App
                 if (string.Equals(cmd, "R", StringComparison.OrdinalIgnoreCase))
                     continue;
 
-                if (int.TryParse(cmd, out var taskId))
+                if (!int.TryParse(cmd, out var taskId))
+                {
+                    Console.WriteLine("Invalid task ID format. Press Enter to try again");
+                    Console.ReadLine();
+                    continue;
+                }
+
+                try
                 {
                     var task = Repo.GetTask(taskId);
-                    if (task is not null && task.ProjectId == projectId)
-                        ShowTask(task);
+
+                    if (task.ProjectId != projectId)
+                        throw new InvalidOperationException("Task does not exist in this project");
+
+                    ShowTask(task);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Press Enter to try again");
+                    Console.ReadLine();
                 }
             }
         }
-
+        /*
+         * Відповідає за відображення інформації про завдання
+         */
         private static void ShowTask(TaskView task)
         {
             Console.Clear();
@@ -98,7 +137,7 @@ namespace TaskManager.App
             Console.WriteLine("Desc:");
             Console.WriteLine(task.Description);
             Console.WriteLine();
-            Console.Write("Press Enter to go back...");
+            Console.Write("Press Enter to go back");
             Console.ReadLine();
         }
     }

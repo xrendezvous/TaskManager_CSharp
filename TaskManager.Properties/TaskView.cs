@@ -1,4 +1,8 @@
-﻿using TaskManager.Storage.Enums;
+﻿/*
+ * Клас для представлення завдання в інтерфейсі, містить обчислюване поле IsOverdue для показу дедлайну, 
+ * поки що не змінює дані
+ */
+using TaskManager.Storage.Enums;
 
 namespace TaskManager.Views
 {

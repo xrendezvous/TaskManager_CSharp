@@ -1,4 +1,7 @@
-﻿using TaskManager.Storage.Enums;
+﻿/*
+ * Клас для представлення проєкту в інтерфейсі, містить обчислюване поле Progress для розрахування прогресу виконання
+ */
+using TaskManager.Storage.Enums;
 
 namespace TaskManager.Views
 {

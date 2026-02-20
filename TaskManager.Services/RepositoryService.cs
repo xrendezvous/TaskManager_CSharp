@@ -1,9 +1,17 @@
-﻿using TaskManager.Views;
+﻿/*
+ * Сервіс для роботи зі сховищем, інкапсулює доступ до DataStorage
+ */ 
+using TaskManager.Views;
 
 namespace TaskManager.Services
 {
     public sealed class RepositoryService
     {
+        /*
+         * Отримує сирі дані зі сховища, для кожного проєкту знаходить відповідні завдання. Потім виконує
+         * обчислення кількості завершених завдань та формує ProjectView для відображення в інтерфейсі. Після чого 
+         * сортує проєкти за id
+         */
         public List<ProjectView> GetProjects()
         {
             var projects = DataStorage.Projects;
@@ -19,7 +27,10 @@ namespace TaskManager.Services
             .OrderBy(p => p.Id)
             .ToList();
         }
-
+        /*
+         * Фільтрує завдання за ProjectId, потім сортує за пріоритетом та за датою виконання,
+         * в кінці перетворює TaskRecord на TaskView
+         */
         public List<TaskView> GetTasksByProjects(int projectId)
         {
             return DataStorage.Tasks
@@ -29,11 +40,25 @@ namespace TaskManager.Services
             .Select(t => new TaskView(t.Id, t.ProjectId, t.Title, t.Description, t.Priority, t.DueDate, t.IsFinished))
             .ToList();
         }
-
-        public TaskView? GetTask(int taskId)
+        /*
+         * Повертає одне завдання за taskId, якщо завдання не знайдено, кидає exception
+         */
+        public TaskView GetTask(int taskId)
         {
-            var t = DataStorage.Tasks.FirstOrDefault(x =>  x.Id == taskId);
-            return t is null ? null : new TaskView(t.Id, t.ProjectId, t.Title, t.Description, t.Priority, t.DueDate, t.IsFinished);
+            var t = DataStorage.Tasks.FirstOrDefault(x => x.Id == taskId);
+
+            if (t is null)
+                throw new KeyNotFoundException($"Task with ID {taskId} was not found.");
+
+            return new TaskView(
+                t.Id,
+                t.ProjectId,
+                t.Title,
+                t.Description,
+                t.Priority,
+                t.DueDate,
+                t.IsFinished
+            );
         }
     }
 }

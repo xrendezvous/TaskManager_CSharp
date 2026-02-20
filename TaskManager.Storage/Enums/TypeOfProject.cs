@@ -1,9 +1,11 @@
-﻿namespace TaskManager.Storage.Enums
+﻿// для визначення виду проєкту
+namespace TaskManager.Storage.Enums
 {
     public enum TypeOfProject
     {
         Work,
         Study,
-        Personal
+        Personal,
+        Other
     }
 }

@@ -1,4 +1,8 @@
-﻿using TaskManager.Storage.Enums;
+﻿/*
+ * Клас для зберігання даних про проєкт, не містить обчислюваних полів та колекції завдань.
+ * Використовується як Storage layer.
+ */
+using TaskManager.Storage.Enums;
 
 namespace TaskManager.Storage.Entities
 {

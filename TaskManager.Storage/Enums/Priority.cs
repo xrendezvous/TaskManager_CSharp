@@ -1,4 +1,5 @@
-﻿namespace TaskManager.Storage.Enums
+﻿// для визначення пріоритету завдання
+namespace TaskManager.Storage.Enums
 {
     public enum Priority
     {

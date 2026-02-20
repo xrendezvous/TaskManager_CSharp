@@ -1,4 +1,7 @@
-﻿using TaskManager.Storage.Entities;
+﻿/*
+ * Сховище для тестування, зберігає готові дані за проєкти та завдання, доступ лише через PepositoryService
+ */ 
+using TaskManager.Storage.Entities;
 using TaskManager.Storage.Enums;
 
 namespace TaskManager.Services

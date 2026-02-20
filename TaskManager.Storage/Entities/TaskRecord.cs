@@ -1,4 +1,7 @@
-﻿using TaskManager.Storage.Enums;
+﻿/*
+ * Клас для зберігання даних про завдання, поки відсутня логіка з дедлайнами
+ */
+using TaskManager.Storage.Enums;
 
 namespace TaskManager.Storage.Entities
 {
