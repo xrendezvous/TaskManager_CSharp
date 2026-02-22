@@ -3,4 +3,5 @@
   <Project Path="TaskManager.Properties/TaskManager.Views.csproj" />
   <Project Path="TaskManager.Services/TaskManager.Services.csproj" />
   <Project Path="TaskManager.Storage/TaskManager.Storage.csproj" />
+  <Project Path="TaskManager.UI/TaskManager.AppUI.csproj" Id="4cc4863a-941e-471f-b3fc-e5024580bcdd" />
 </Solution>
