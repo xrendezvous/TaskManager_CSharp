@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace TaskManager.UI
+namespace TaskManager.AppUI
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

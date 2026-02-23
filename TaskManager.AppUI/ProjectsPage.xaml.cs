@@ -26,7 +26,7 @@ public partial class ProjectsPage : ContentPage
             return;
 
         var p = (Views.ProjectView)project;
-
-        await Shell.Current.GoToAsync($"projectdetails?projectId={p.Id}");
+        ProjectsList.SelectedItem = null;
+        await Shell.Current.GoToAsync($"{nameof(ProjectDetailsPage)}?projectId={p.Id}");
     }
 }

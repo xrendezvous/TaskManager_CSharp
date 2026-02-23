@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace TaskManager.UI
+namespace TaskManager.AppUI
 {
     public class Program
     {

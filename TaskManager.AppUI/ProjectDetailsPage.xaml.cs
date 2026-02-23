@@ -6,7 +6,7 @@ namespace TaskManager.AppUI;
 public partial class ProjectDetailsPage : ContentPage
 {
     private readonly RepositoryService _repo;
-    public string ProjectId { get; set; }
+    public string? ProjectId { get; set; }
 
     public ProjectDetailsPage(RepositoryService repo)
     {
@@ -17,6 +17,9 @@ public partial class ProjectDetailsPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+
+        if (string.IsNullOrWhiteSpace(ProjectId))
+            return;
 
         int id = int.Parse(ProjectId);
 

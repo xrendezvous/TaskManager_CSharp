@@ -6,7 +6,7 @@ namespace TaskManager.AppUI;
 public partial class TaskDetailsPage : ContentPage
 {
     private readonly RepositoryService _repo;
-    public string TaskId { get; set; }
+    public string? TaskId { get; set; }
 
     public TaskDetailsPage(RepositoryService repo)
     {
@@ -17,6 +17,9 @@ public partial class TaskDetailsPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        
+        if (string.IsNullOrWhiteSpace(TaskId))
+                return;
 
         int id = int.Parse(TaskId);
 
