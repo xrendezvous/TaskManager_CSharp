@@ -1,0 +1,20 @@
+﻿<ContentPage
+    x:Class="TaskManager.AppUI.TaskDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Task Details">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16">
+
+            <Label x:Name="TitleLabel" FontSize="22" FontAttributes="Bold"/>
+            <Label x:Name="PriorityLabel"/>
+            <Label x:Name="DueLabel"/>
+            <Label x:Name="DoneLabel"/>
+            <Label x:Name="OverdueLabel"/>
+            <Label Text="Description:" FontAttributes="Bold" Margin="0,16,0,4"/>
+            <Label x:Name="DescLabel"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

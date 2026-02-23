@@ -1,0 +1,24 @@
+﻿<ContentPage
+    x:Class="TaskManager.AppUI.ProjectsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Projects">
+
+    <VerticalStackLayout Padding="16">
+        <CollectionView x:Name="ProjectsList"
+                        SelectionMode="Single"
+                        SelectionChanged="OnProjectSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,0,0,8">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Type}"/>
+                            <Label Text="{Binding Progress, StringFormat='Progress: {0}%'}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

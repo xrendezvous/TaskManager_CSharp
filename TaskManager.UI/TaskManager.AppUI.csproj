@@ -67,4 +67,25 @@
 	  <ProjectReference Include="..\TaskManager.Storage\TaskManager.Storage.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="TaskDetailsPage.xaml.cs">
+	    <DependentUpon>TaskDetailsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ProjectDetailsPage.xaml.cs">
+	    <DependentUpon>ProjectDetailsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ProjectsPage.xaml.cs">
+	    <DependentUpon>ProjectsPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="TaskDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ProjectDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

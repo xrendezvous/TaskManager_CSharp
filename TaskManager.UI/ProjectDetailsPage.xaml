@@ -1,0 +1,36 @@
+﻿<ContentPage
+    x:Class="TaskManager.AppUI.ProjectDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Projects Details">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16">
+
+            <Label x:Name="NameLabel" FontSize="22" FontAttributes="Bold"/>
+            <Label x:Name="TypeLabel"/>
+            <Label x:Name="DescLabel"/>
+            <Label x:Name="ProgressLabel"/>
+
+            <Label Text="Tasks:" FontAttributes="Bold" Margin="0,16,0,8"/>
+
+            <CollectionView x:Name="TasksList"
+                            SelectionChanged="OnTaskSelected">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12" Margin="0,0,0,8">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Title}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Priority}"/>
+                                <Label Text="{Binding IsOverdue, StringFormat='Overdue: {0}'}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

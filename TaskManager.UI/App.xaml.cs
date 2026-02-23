@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace TaskManager.UI
+﻿namespace TaskManager.AppUI
 {
     public partial class App : Application
     {
