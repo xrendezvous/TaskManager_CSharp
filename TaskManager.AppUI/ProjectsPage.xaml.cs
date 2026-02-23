@@ -1,4 +1,5 @@
 ﻿using TaskManager.Services;
+using TaskManager.Views;
 
 namespace TaskManager.AppUI;
 
@@ -19,14 +20,13 @@ public partial class ProjectsPage : ContentPage
         ProjectsList.ItemsSource = _repo.GetProjects();
     }
 
-    private async void OnProjectSelected(object sender, SelectionChangedEventArgs e)
-    {
-        var project = e.CurrentSelection.FirstOrDefault();
-        if (project == null)
-            return;
+    private async void OnProjectSelected(object sender, SelectionChangedEventArgs e) 
+    { 
+        var project = e.CurrentSelection.FirstOrDefault(); 
+        
+        if (project == null) return; 
+        var p = (ProjectView)project;
 
-        var p = (Views.ProjectView)project;
-        ProjectsList.SelectedItem = null;
         await Shell.Current.GoToAsync($"{nameof(ProjectDetailsPage)}?projectId={p.Id}");
     }
 }

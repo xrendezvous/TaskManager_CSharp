@@ -25,10 +25,11 @@ public partial class ProjectDetailsPage : ContentPage
 
         var project = _repo.GetProjects().First(p => p.Id == id);
 
-        NameLabel.Text = project.Name;
-        TypeLabel.Text = $"Type: {project.Type}";
-        DescLabel.Text = $"Description: {project.Description}";
-        ProgressLabel.Text = $"Progress: {project.Progress}%";
+        ProjectTitle.Text = project.Name;
+        ProjectDescription.Text =
+            $"Type: {project.Type}\n" +
+            $"Description: {project.Description}\n" +
+            $"Progress: {project.Progress}%";
 
         TasksList.ItemsSource = _repo.GetTasksByProjects(id);
     }
@@ -41,6 +42,6 @@ public partial class ProjectDetailsPage : ContentPage
 
         var t = (Views.TaskView)task;
 
-        await Shell.Current.GoToAsync($"taskdetails?taskId={t.Id}");
+        await Shell.Current.GoToAsync($"{nameof(TaskDetailsPage)}?taskId={t.Id}");
     }
 }

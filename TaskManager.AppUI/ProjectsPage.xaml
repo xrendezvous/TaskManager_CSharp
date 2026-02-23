@@ -3,24 +3,88 @@
     x:Class="TaskManager.AppUI.ProjectsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Projects">
+    xmlns:views="clr-namespace:TaskManager.Views;assembly=TaskManager.Views"
+    Title="Projects"
+    BackgroundColor="#F4F6FA">
 
-    <VerticalStackLayout Padding="16">
+    <Grid RowDefinitions="Auto,*"
+          Padding="15">
+
+        <Label Text="Projects"
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="#1E293B" 
+               Margin="0,0,0,10" />
+
         <CollectionView x:Name="ProjectsList"
-                        SelectionMode="Single"
-                        SelectionChanged="OnProjectSelected">
+                            Grid.Row="1"
+                            SelectionMode="Single"
+                            SelectionChanged="OnProjectSelected">
+
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="12" Margin="0,0,0,8">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Type}"/>
-                            <Label Text="{Binding Progress, StringFormat='Progress: {0}%'}"/>
-                        </VerticalStackLayout>
-                    </Frame>
+                <DataTemplate x:DataType="views:ProjectView">
+
+                    <Border Stroke="#E0E0E0"
+                            StrokeThickness="1"
+                            BackgroundColor="White"
+                            Padding="16"
+                            Margin="0,0,0,12"
+                            StrokeShape="RoundRectangle 14">
+
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+                              ColumnDefinitions="*,Auto">
+
+                            <Label Text="{Binding Name}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   Grid.ColumnSpan="2"/>
+                            <Label Text="{Binding Type}"
+                                   Grid.Row="1"
+                                   FontSize="13"
+                                   TextColor="Gray"/>
+                            <Label Text="{Binding Description}"
+                                   FontSize="14"
+                                   Grid.Row="2"
+                                   TextColor="#475569"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2"/>
+                            <Label Grid.Row="3"
+                                   Grid.Column="1"
+                                   Text="{Binding Progress, StringFormat='{}{0}%'}"
+                                   HorizontalOptions="End"
+                                   FontAttributes="Bold"
+                                   TextColor="#3B82F6"/>
+
+                            <ProgressBar Grid.Row="4"
+                                         Grid.ColumnSpan="2"
+                                         HeightRequest="6"
+                                         Progress="{Binding Progress, Converter={StaticResource ProgressConverter}}"
+                                         BackgroundColor="#EEEEEE"
+                                         ProgressColor="#3B82F6"
+                                         Margin="0,8,0,0"/>
+
+                            <HorizontalStackLayout Grid.Row="3"
+                                                   Grid.ColumnSpan="2"
+                                                   Spacing="10"
+                                                   Margin="0,12,0,0">
+
+                                <Button Text="Edit"
+                                        IsEnabled="False"
+                                        BackgroundColor="#F3F4F6"
+                                        TextColor="Gray"
+                                        CornerRadius="8"/>
+
+                                <Button Text="Delete"
+                                        IsEnabled="False"
+                                        BackgroundColor="#FEE2E2"
+                                        TextColor="#B91C1C"
+                                        CornerRadius="8"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
 
