@@ -44,4 +44,21 @@ public partial class ProjectDetailsPage : ContentPage
 
         await Shell.Current.GoToAsync($"{nameof(TaskDetailsPage)}?taskId={t.Id}");
     }
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+
+        if (TasksList.ItemsLayout is GridItemsLayout layout)
+        {
+            if (width > 1200)
+                layout.Span = 4;
+            else if (width > 900)
+                layout.Span = 3;
+            else if (width > 600)
+                layout.Span = 2;
+            else
+                layout.Span = 1;
+        }
+    }
 }

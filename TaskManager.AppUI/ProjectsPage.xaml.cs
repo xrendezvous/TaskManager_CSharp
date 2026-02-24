@@ -29,4 +29,19 @@ public partial class ProjectsPage : ContentPage
 
         await Shell.Current.GoToAsync($"{nameof(ProjectDetailsPage)}?projectId={p.Id}");
     }
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+
+        if (ProjectsList.ItemsLayout is GridItemsLayout layout)
+        {
+            if (width > 1200)
+                layout.Span = 4;
+            else if (width > 800)
+                layout.Span = 3;
+            else
+                layout.Span = 2;
+        }
+    }
 }
