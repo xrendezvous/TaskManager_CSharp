@@ -6,10 +6,10 @@ namespace TaskManager.AppUI;
 [QueryProperty(nameof(ProjectId), "projectId")]
 public partial class ProjectDetailsPage : ContentPage
 {
-    private readonly RepositoryService _repo;
+    private readonly IRepositoryService _repo;
     public string? ProjectId { get; set; }
 
-    public ProjectDetailsPage(RepositoryService repo)
+    public ProjectDetailsPage(IRepositoryService repo)
     {
         InitializeComponent();
         _repo = repo;

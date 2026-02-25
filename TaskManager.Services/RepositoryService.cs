@@ -5,7 +5,7 @@ using TaskManager.Views;
 
 namespace TaskManager.Services
 {
-    public sealed class RepositoryService
+    public sealed class RepositoryService : IRepositoryService
     {
         /*
          * Отримує сирі дані зі сховища, для кожного проєкту знаходить відповідні завдання. Потім виконує

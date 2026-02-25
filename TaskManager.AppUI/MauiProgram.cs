@@ -11,7 +11,7 @@ public static class MauiProgram
 
         builder.UseMauiApp<App>();
 
-        builder.Services.AddSingleton<RepositoryService>();
+        builder.Services.AddSingleton<IRepositoryService, RepositoryService>();
         builder.Services.AddTransient<ProjectsPage>();
         builder.Services.AddTransient<ProjectDetailsPage>();
         builder.Services.AddTransient<TaskDetailsPage>();

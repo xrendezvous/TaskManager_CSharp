@@ -5,10 +5,10 @@ namespace TaskManager.AppUI;
 [QueryProperty(nameof(TaskId), "taskId")]
 public partial class TaskDetailsPage : ContentPage
 {
-    private readonly RepositoryService _repo;
+    private readonly IRepositoryService _repo;
     public string? TaskId { get; set; }
 
-    public TaskDetailsPage(RepositoryService repo)
+    public TaskDetailsPage(IRepositoryService repo)
     {
         InitializeComponent();
         _repo = repo;

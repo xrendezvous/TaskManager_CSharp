@@ -5,9 +5,9 @@ namespace TaskManager.AppUI;
 
 public partial class ProjectsPage : ContentPage
 {
-    private readonly RepositoryService _repo;
+    private readonly IRepositoryService _repo;
 
-    public ProjectsPage(RepositoryService repo)
+    public ProjectsPage(IRepositoryService repo)
     {
         InitializeComponent();
         _repo = repo;
