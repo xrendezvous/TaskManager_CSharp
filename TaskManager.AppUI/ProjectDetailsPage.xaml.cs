@@ -1,4 +1,5 @@
 ﻿using TaskManager.Services;
+using TaskManager.Views;
 
 namespace TaskManager.AppUI;
 
@@ -34,15 +35,14 @@ public partial class ProjectDetailsPage : ContentPage
         TasksList.ItemsSource = _repo.GetTasksByProjects(id);
     }
 
-    private async void OnTaskSelected(object sender, SelectionChangedEventArgs e)
+    private async void OnOpenClicked(object sender, EventArgs e)
     {
-        var task = e.CurrentSelection.FirstOrDefault();
-        if (task == null)
-            return;
-
-        var t = (Views.TaskView)task;
-
-        await Shell.Current.GoToAsync($"{nameof(TaskDetailsPage)}?taskId={t.Id}");
+        if (sender is Button button &&
+            button.BindingContext is TaskView task)
+        {
+            await Shell.Current.GoToAsync(
+                $"{nameof(TaskDetailsPage)}?taskId={task.Id}");
+        }
     }
 
     protected override void OnSizeAllocated(double width, double height)

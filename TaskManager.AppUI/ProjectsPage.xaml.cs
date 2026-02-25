@@ -20,14 +20,14 @@ public partial class ProjectsPage : ContentPage
         ProjectsList.ItemsSource = _repo.GetProjects();
     }
 
-    private async void OnProjectSelected(object sender, SelectionChangedEventArgs e) 
-    { 
-        var project = e.CurrentSelection.FirstOrDefault(); 
-        
-        if (project == null) return; 
-        var p = (ProjectView)project;
-
-        await Shell.Current.GoToAsync($"{nameof(ProjectDetailsPage)}?projectId={p.Id}");
+    private async void OnOpenClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button &&
+            button.BindingContext is ProjectView project)
+        {
+            await Shell.Current.GoToAsync(
+                $"{nameof(ProjectDetailsPage)}?projectId={project.Id}");
+        }
     }
 
     protected override void OnSizeAllocated(double width, double height)
