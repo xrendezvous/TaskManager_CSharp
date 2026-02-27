@@ -68,22 +68,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="TaskDetailsPage.xaml.cs">
+	  <Compile Update="Pages\TaskDetailsPage.xaml.cs">
 	    <DependentUpon>TaskDetailsPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ProjectsPage.xaml.cs">
+	  <Compile Update="Pages\ProjectsPage.xaml.cs">
 	    <DependentUpon>ProjectsPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ProjectDetailsPage.xaml.cs">
+	  <Compile Update="Pages\ProjectDetailsPage.xaml.cs">
 	    <DependentUpon>ProjectDetailsPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="TaskDetailsPage.xaml">
+	  <MauiXaml Update="Pages\TaskDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ProjectsPage.xaml">
+	  <MauiXaml Update="Pages\ProjectsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

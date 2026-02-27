@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace TaskManager.AppUI;
+namespace TaskManager.AppUI.Converter;
 public class ProgressLineConv : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
