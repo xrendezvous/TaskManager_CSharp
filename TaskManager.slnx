@@ -4,6 +4,7 @@
     <Deploy Solution="Debug|*" />
   </Project>
   <Project Path="TaskManager.Properties/TaskManager.Views.csproj" />
+  <Project Path="TaskManager.Repositories/TaskManager.Repositories.csproj" Id="6553ffa9-88b7-468b-a0f1-d9048d9dd4e4" />
   <Project Path="TaskManager.Services/TaskManager.Services.csproj" />
   <Project Path="TaskManager.Storage/TaskManager.Storage.csproj" />
 </Solution>

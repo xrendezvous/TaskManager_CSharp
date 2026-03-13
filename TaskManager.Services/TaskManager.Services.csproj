@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaskManager.Properties\TaskManager.Views.csproj" />
+    <ProjectReference Include="..\TaskManager.Repositories\TaskManager.Repositories.csproj" />
     <ProjectReference Include="..\TaskManager.Storage\TaskManager.Storage.csproj" />
   </ItemGroup>
 
