@@ -6,16 +6,23 @@ namespace TaskManager.Repositories.Repositories
 {
     public sealed class ProjectRepository : IProjectRepository
     {
-        public List<ProjectRecord> GetAllProjects()
+        private readonly IStorageContext _storageContext;
+
+        public ProjectRepository(IStorageContext storageContext)
         {
-            return DataStorage.Projects
+            _storageContext = storageContext;
+        }
+
+        public IEnumerable<ProjectRecord> GetAllProjects()
+        {
+            return _storageContext.GetProjects()
                 .OrderBy(p => p.Id)
                 .ToList();
         }
 
         public ProjectRecord GetById(int projectId)
         {
-            var project = DataStorage.Projects.FirstOrDefault(p => p.Id == projectId);
+            var project = _storageContext.GetProject(projectId);
 
             if (project is null)
                 throw new KeyNotFoundException($"Project with ID {projectId} was not found.");

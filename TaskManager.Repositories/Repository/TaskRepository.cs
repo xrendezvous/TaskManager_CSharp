@@ -6,14 +6,20 @@ namespace TaskManager.Repositories.Repositories
 {
     public sealed class TaskRepository : ITaskRepository
     {
-        public List<TaskRecord> GetAllTasks()
+        private readonly IStorageContext _storageContext;
+
+        public TaskRepository(IStorageContext storageContext)
         {
-            return DataStorage.Tasks.ToList();
+            _storageContext = storageContext;
+        }
+        public IEnumerable<TaskRecord> GetAllTasks()
+        {
+            return _storageContext.GetTasks().ToList();
         }
 
-        public List<TaskRecord> GetByProjectId(int projectId)
+        public IEnumerable<TaskRecord> GetByProjectId(int projectId)
         {
-            return DataStorage.Tasks
+            return _storageContext.GetTasksByProject(projectId)
                 .Where(t => t.ProjectId == projectId)
                 .OrderByDescending(t => t.Priority)
                 .ThenBy(t => t.DueDate)
@@ -22,7 +28,7 @@ namespace TaskManager.Repositories.Repositories
 
         public TaskRecord GetById(int taskId)
         {
-            var task = DataStorage.Tasks.FirstOrDefault(t => t.Id == taskId);
+            var task = _storageContext.GetTask(taskId);
 
             if (task is null)
                 throw new KeyNotFoundException($"Task with ID {taskId} was not found.");

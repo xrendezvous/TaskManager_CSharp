@@ -4,8 +4,8 @@ namespace TaskManager.Repositories.Interface
 {
     public interface ITaskRepository
     {
-        List<TaskRecord> GetAllTasks();
-        List<TaskRecord> GetByProjectId(int projectId);
+        IEnumerable<TaskRecord> GetAllTasks();
+        IEnumerable<TaskRecord> GetByProjectId(int projectId);
         TaskRecord GetById(int taskId);
     }
 }

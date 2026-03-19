@@ -4,7 +4,7 @@
 using TaskManager.Storage.Entities;
 using TaskManager.Storage.Enums;
 
-namespace TaskManager.Services
+namespace TaskManager.Storage
 {
     internal static class DataStorage
     {

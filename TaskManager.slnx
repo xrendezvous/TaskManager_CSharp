@@ -1,5 +1,4 @@
 <Solution>
-  <Project Path="TaskManager.App/TaskManager.App.csproj" Id="fa544031-ab17-41ff-93d5-d67609c8c944" />
   <Project Path="TaskManager.AppUI/TaskManager.AppUI.csproj" Id="f4350287-a8ad-4799-bc85-d49d05fa5a95">
     <Deploy Solution="Debug|*" />
   </Project>
