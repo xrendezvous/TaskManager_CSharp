@@ -2,7 +2,6 @@
   <Project Path="TaskManager.AppUI/TaskManager.AppUI.csproj" Id="f4350287-a8ad-4799-bc85-d49d05fa5a95">
     <Deploy Solution="Debug|*" />
   </Project>
-  <Project Path="TaskManager.Properties/TaskManager.Views.csproj" />
   <Project Path="TaskManager.Repositories/TaskManager.Repositories.csproj" Id="6553ffa9-88b7-468b-a0f1-d9048d9dd4e4" />
   <Project Path="TaskManager.Services/TaskManager.Services.csproj" />
   <Project Path="TaskManager.Storage/TaskManager.Storage.csproj" />

@@ -3,32 +3,34 @@
     x:Class="TaskManager.AppUI.ProjectDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:TaskManager.Views;assembly=TaskManager.Views"
+    xmlns:dto="clr-namespace:TaskManager.Services.DTO;assembly=TaskManager.Services"
+    x:Name="PageRoot"
     Title="Project Details"
     BackgroundColor="#F4F6FA">
 
     <Grid RowDefinitions="Auto,Auto,*" Padding="20">
 
-        <Label x:Name="ProjectTitle"
+        <Label Text="{Binding ProjectName}"
                FontSize="28"
                FontAttributes="Bold"
                TextColor="#1E293B"/>
-        <Label x:Name="ProjectDescription"
-               Grid.Row="1"
+
+        <Label Grid.Row="1"
+               Text="{Binding ProjectDescription}"
                TextColor="#64748B"
                Margin="0,6,0,20"/>
 
-        <CollectionView x:Name="TasksList"
-                        Grid.Row="2"
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Tasks}"
                         SelectionMode="None">
 
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
-                                 Span="2"/>
+                                 Span="1"/>
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="views:TaskView">
+                <DataTemplate x:DataType="dto:TaskListDto">
 
                     <Border Stroke="#E2E8F0"
                             BackgroundColor="White"
@@ -38,7 +40,7 @@
 
                         <VerticalStackLayout Spacing="6">
 
-                            <Label Text="{Binding Title}"
+                            <Label Text="{Binding Name}"
                                    FontAttributes="Bold"
                                    FontSize="15"
                                    TextColor="#1E293B"
@@ -76,7 +78,8 @@
                                     BackgroundColor="#3B82F6"
                                     TextColor="White"
                                     CornerRadius="12"
-                                    Clicked="OnOpenClicked"/>
+                                    Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.OpenTaskCommand}"
+                                    CommandParameter="{Binding Id}" />
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

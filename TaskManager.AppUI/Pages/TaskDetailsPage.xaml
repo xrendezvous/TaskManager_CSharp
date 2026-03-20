@@ -3,6 +3,7 @@
     x:Class="TaskManager.AppUI.TaskDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:TaskManager.AppUI.ViewModels;assembly=TaskManager.AppUI"
     Title="Task Details"
     BackgroundColor="#F4F6FA">
 
@@ -17,16 +18,18 @@
 
                 <VerticalStackLayout Spacing="12">
 
-                    <Label x:Name="TitleLabel"
+                    <Label Text="{Binding Title}"
                            FontSize="24"
                            FontAttributes="Bold"
-                           TextColor="Black"/>
-                    <Label x:Name="PriorityLabel"
+                           TextColor="Black" />
+
+                    <Label Text="{Binding PriorityText}"
                            FontSize="14"
-                           TextColor="Black"/>
-                    <Label x:Name="DueLabel"
+                           TextColor="Black" />
+
+                    <Label Text="{Binding DueText}"
                            FontSize="14"
-                           TextColor="Black"/>
+                           TextColor="Black" />
 
                 </VerticalStackLayout>
             </Border>
@@ -42,13 +45,15 @@
                     <Label Text="Status"
                            FontAttributes="Bold"
                            FontSize="16"
-                           TextColor="Black"/>
-                    <Label x:Name="DoneLabel"
+                           TextColor="Black" />
+
+                    <Label Text="{Binding DoneText}"
                            FontSize="14"
-                           TextColor="Black"/>
-                    <Label x:Name="OverdueLabel"
+                           TextColor="Black" />
+
+                    <Label Text="{Binding OverdueText}"
                            FontSize="14"
-                           TextColor="Black"/>
+                           TextColor="Black" />
 
                 </VerticalStackLayout>
             </Border>
@@ -60,12 +65,14 @@
                     StrokeShape="RoundRectangle 14">
 
                 <VerticalStackLayout Spacing="10">
+
                     <Label Text="Description"
                            FontAttributes="Bold"
                            FontSize="16"
-                           TextColor="Black"/>
-                    <Label x:Name="DescLabel"
-                           LineBreakMode="WordWrap"/>
+                           TextColor="Black" />
+
+                    <Label Text="{Binding Description}"
+                           LineBreakMode="WordWrap" />
 
                 </VerticalStackLayout>
             </Border>
@@ -76,16 +83,15 @@
                         IsEnabled="False"
                         BackgroundColor="#E5E7EB"
                         TextColor="Gray"
-                        CornerRadius="10"/>
+                        CornerRadius="10" />
 
                 <Button Text="Delete"
                         IsEnabled="False"
                         BackgroundColor="#FEE2E2"
                         TextColor="#B91C1C"
-                        CornerRadius="10"/>
+                        CornerRadius="10" />
 
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-

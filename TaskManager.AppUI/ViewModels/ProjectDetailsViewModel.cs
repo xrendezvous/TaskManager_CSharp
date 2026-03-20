@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using TaskManager.AppUI.Services;
 using TaskManager.Services.DTO;
-using TaskManager.Services.Interface;
+using TaskManager.Services.Interfaces;
 
 namespace TaskManager.AppUI.ViewModels;
 

@@ -62,7 +62,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TaskManager.Properties\TaskManager.Views.csproj" />
 	  <ProjectReference Include="..\TaskManager.Services\TaskManager.Services.csproj" />
 	  <ProjectReference Include="..\TaskManager.Storage\TaskManager.Storage.csproj" />
 	</ItemGroup>

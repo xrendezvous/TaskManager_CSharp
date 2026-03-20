@@ -1,6 +1,5 @@
-﻿using TaskManager.Services.Interface;
-
-namespace TaskManager.AppUI.ViewModels;
+﻿using TaskManager.AppUI.ViewModels;
+using TaskManager.Services.Interfaces;
 
 public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
 {
