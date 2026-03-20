@@ -6,6 +6,9 @@ using TaskManager.Services.Interfaces;
 
 namespace TaskManager.AppUI.ViewModels;
 
+/// <summary>
+/// Represents the view model for the project details page.
+/// </summary>
 public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IProjectService _projectService;
@@ -30,6 +33,12 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
 
     public ICommand OpenTaskCommand { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProjectDetailsViewModel"/> class.
+    /// </summary>
+    /// <param name="projectService">The service used to load project data.</param>
+    /// <param name="taskService">The service used to load task data.</param>
+    /// <param name="navigationService">The service used for page navigation.</param>
     public ProjectDetailsViewModel(
         IProjectService projectService,
         ITaskService taskService,
@@ -43,6 +52,10 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
             await _navigationService.GoToTaskDetailsAsync(id));
     }
 
+    /// <summary>
+    /// Applies query parameters passed through Shell navigation.
+    /// </summary>
+    /// <param name="query">A dictionary containing navigation query parameters.</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (!query.TryGetValue("projectId", out var value))
@@ -54,6 +67,10 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         LoadProject(projectId);
     }
 
+    /// <summary>
+    /// Loads project details and related tasks into the view model.
+    /// </summary>
+    /// <param name="projectId">The project identifier.</param>
     private void LoadProject(int projectId)
     {
         var project = _projectService.GetProjectDetails(projectId);

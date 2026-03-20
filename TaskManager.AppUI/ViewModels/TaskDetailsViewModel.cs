@@ -1,6 +1,9 @@
 ﻿using TaskManager.AppUI.ViewModels;
 using TaskManager.Services.Interfaces;
 
+/// <summary>
+/// Represents the view model for the task details page.
+/// </summary>
 public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly ITaskService _taskService;
@@ -47,11 +50,19 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
         set => SetProperty(ref _description, value);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TaskDetailsViewModel"/> class.
+    /// </summary>
+    /// <param name="taskService">The service used to load task data.</param>
     public TaskDetailsViewModel(ITaskService taskService)
     {
         _taskService = taskService;
     }
 
+    /// <summary>
+    /// Applies query parameters passed through Shell navigation.
+    /// </summary>
+    /// <param name="query">A dictionary containing navigation query parameters.</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (!query.TryGetValue("taskId", out var value))
@@ -63,6 +74,10 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
         LoadTask(taskId);
     }
 
+    /// <summary>
+    /// Loads task details into the view model.
+    /// </summary>
+    /// <param name="taskId">The task identifier.</param>
     private void LoadTask(int taskId)
     {
         var task = _taskService.GetTaskDetails(taskId);
