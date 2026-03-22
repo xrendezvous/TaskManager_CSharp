@@ -8,11 +8,11 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly ITaskService _taskService;
 
-    private string _title = string.Empty;
-    public string Title
+    private string _name = string.Empty;
+    public string Name
     {
-        get => _title;
-        set => SetProperty(ref _title, value);
+        get => _name;
+        set => SetProperty(ref _name, value);
     }
 
     private string _priorityText = string.Empty;
@@ -82,7 +82,7 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
     {
         var task = _taskService.GetTaskDetails(taskId);
 
-        Title = task.Title;
+        Name = task.Name;
         PriorityText = $"Priority: {task.Priority}";
         DueText = $"Due: {task.DueDate:yyyy-MM-dd}";
         DoneText = $"Finished: {task.IsFinished}";

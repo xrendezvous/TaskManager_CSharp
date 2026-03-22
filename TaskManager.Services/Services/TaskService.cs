@@ -27,7 +27,7 @@ namespace TaskManager.Services.Services
                 {
                     Id = task.Id,
                     ProjectId = task.ProjectId,
-                    Name = task.Title,
+                    Name = task.Name,
                     Priority = task.Priority,
                     IsFinished = task.IsFinished,
                     IsOverdue = !task.IsFinished && DateTime.Today > task.DueDate.Date
@@ -43,7 +43,7 @@ namespace TaskManager.Services.Services
             {
                 Id = task.Id,
                 ProjectId = task.ProjectId,
-                Title = task.Title,
+                Name = task.Name,
                 Description = task.Description,
                 Priority = task.Priority,
                 DueDate = task.DueDate,

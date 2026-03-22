@@ -9,7 +9,7 @@ namespace TaskManager.Repositories.Entities
     {
         public int Id { get; }
         public int ProjectId { get; }
-        public string Title { get; private set; }
+        public string Name { get; private set; }
         public string Description { get; private set; }
         public Priority Priority { get; private set; }
         public DateTime DueDate { get; private set; }
@@ -28,7 +28,7 @@ namespace TaskManager.Repositories.Entities
         public TaskRecord(
             int id,
             int projectId,
-            string title,
+            string name,
             string desc,
             Priority priority,
             DateTime dueDate,
@@ -36,7 +36,7 @@ namespace TaskManager.Repositories.Entities
         {
             Id = id;
             ProjectId = projectId;
-            Title = title;
+            Name = name;
             Description = desc;
             Priority = priority;
             DueDate = dueDate;
@@ -52,13 +52,13 @@ namespace TaskManager.Repositories.Entities
         /// <param name="dueDate"/>
         /// <param name="finished"/>
         public void UpdateRecord(
-            string title,
+            string name,
             string desc,
             Priority priority,
             DateTime dueDate,
             bool finished)
         {
-            Title = title;
+            Name = name;
             Description = desc;
             Priority = priority;
             DueDate = dueDate;

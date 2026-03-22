@@ -18,7 +18,7 @@
 
                 <VerticalStackLayout Spacing="12">
 
-                    <Label Text="{Binding Title}"
+                    <Label Text="{Binding Name}"
                            FontSize="24"
                            FontAttributes="Bold"
                            TextColor="Black" />
