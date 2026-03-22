@@ -5,7 +5,7 @@ using TaskManager.Services.Interfaces;
 namespace TaskManager.Services.Services
 {
     /// <summary>
-    /// Provides project-related business logic and prepares DTO models for the UI layer.
+    /// provides project-related business logic and prepares DTO models for the UI layer
     /// </summary>
     public sealed class ProjectService : IProjectService
     {
@@ -13,10 +13,10 @@ namespace TaskManager.Services.Services
         private readonly ITaskRepository _taskRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectService"/> class.
+        /// initializes a new instance of the <see cref="ProjectService"/> class
         /// </summary>
-        /// <param name="projectRepository">The repository used to access project data.</param>
-        /// <param name="taskRepository">The repository used to access task data.</param>
+        /// <param name="projectRepository">repository used to access project data</param>
+        /// <param name="taskRepository">repository used to access task data</param>
         public ProjectService(
             IProjectRepository projectRepository,
             ITaskRepository taskRepository)
@@ -25,10 +25,6 @@ namespace TaskManager.Services.Services
             _taskRepository = taskRepository;
         }
 
-        /// <summary>
-        /// Gets project data for displaying in the projects list.
-        /// </summary>
-        /// <returns>A list of project DTO objects for the list view.</returns>
         public List<ProjectListDto> GetProjectsForList()
         {
             var projects = _projectRepository.GetAllProjects();
@@ -56,14 +52,6 @@ namespace TaskManager.Services.Services
                 .ToList();
         }
 
-        /// <summary>
-        /// Gets detailed information about a project.
-        /// </summary>
-        /// <param name="projectId">The project identifier.</param>
-        /// <returns>A DTO object containing detailed project information.</returns>
-        /// <exception cref="KeyNotFoundException">
-        /// Thrown when the project with the specified identifier is not found.
-        /// </exception>
         public ProjectDetailsDto GetProjectDetails(int projectId)
         {
             var project = _projectRepository.GetById(projectId);

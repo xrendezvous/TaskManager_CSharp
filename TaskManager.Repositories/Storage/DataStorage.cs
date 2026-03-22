@@ -4,8 +4,8 @@ using TaskManager.Repositories.Enums;
 namespace TaskManager.Repositories.Storage
 {
     /// <summary>
-    /// Provides in-memory test data for projects and tasks.
-    /// Implements the storage context contract used by the repository layer.
+    /// provides in-memory test data for projects and tasks
+    /// implements the storage context contract used by the repository layer
     /// </summary>
     public sealed class DataStorage : IStorageContext
     {
@@ -33,49 +33,26 @@ namespace TaskManager.Repositories.Storage
             new TaskRecord(202, 2, "Make a presentation", "10-12 slides", Priority.Critical, DateTime.Today.AddDays(8), false),
         };
 
-        /// <summary>
-        /// Gets all projects from storage.
-        /// </summary>
-        /// <returns>A collection of all stored projects.</returns>
         public IEnumerable<ProjectRecord> GetProjects()
         {
             return _projects;
         }
 
-        /// <summary>
-        /// Gets a project by its identifier.
-        /// </summary>
-        /// <param name="projectId">The project identifier.</param>
-        /// <returns>The matching project record, or <see langword="null"/> if it was not found.</returns>
         public ProjectRecord? GetProject(int projectId)
         {
             return _projects.FirstOrDefault(p => p.Id == projectId);
         }
 
-        /// <summary>
-        /// Gets all tasks from storage.
-        /// </summary>
-        /// <returns>A collection of all stored tasks.</returns>
         public IEnumerable<TaskRecord> GetTasks()
         {
             return _tasks;
         }
 
-        /// <summary>
-        /// Gets tasks that belong to the specified project.
-        /// </summary>
-        /// <param name="projectId">The project identifier.</param>
-        /// <returns>A collection of task records for the specified project.</returns>
         public IEnumerable<TaskRecord> GetTasksByProject(int projectId)
         {
             return _tasks.Where(t => t.ProjectId == projectId);
         }
 
-        /// <summary>
-        /// Gets a task by its identifier.
-        /// </summary>
-        /// <param name="taskId">The task identifier.</param>
-        /// <returns>The matching task record, or <see langword="null"/> if it was not found.</returns>
         public TaskRecord? GetTask(int taskId)
         {
             return _tasks.FirstOrDefault(t => t.Id == taskId);

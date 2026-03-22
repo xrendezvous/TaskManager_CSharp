@@ -5,26 +5,21 @@ using TaskManager.Services.Interfaces;
 namespace TaskManager.Services.Services
 {
     /// <summary>
-    /// Provides task-related business logic and prepares DTO models for the UI layer.
+    /// provides task-related business logic and prepares DTO models for the UI layer
     /// </summary>
     public sealed class TaskService : ITaskService
     {
         private readonly ITaskRepository _taskRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskService"/> class.
+        /// initializes a new instance of the <see cref="TaskService"/> class
         /// </summary>
-        /// <param name="taskRepository">The repository used to access task data.</param>
+        /// <param name="taskRepository">repository used to access task data</param>
         public TaskService(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
         }
 
-        /// <summary>
-        /// Gets task data for displaying in the project details list.
-        /// </summary>
-        /// <param name="projectId">The project identifier.</param>
-        /// <returns>A list of task DTO objects for the list view.</returns>
         public List<TaskListDto> GetTasksForProject(int projectId)
         {
             return _taskRepository.GetByProjectId(projectId)
@@ -40,14 +35,6 @@ namespace TaskManager.Services.Services
                 .ToList();
         }
 
-        /// <summary>
-        /// Gets detailed information about a task.
-        /// </summary>
-        /// <param name="taskId">The task identifier.</param>
-        /// <returns>A DTO object containing detailed task information.</returns>
-        /// <exception cref="KeyNotFoundException">
-        /// Thrown when the task with the specified identifier is not found.
-        /// </exception>
         public TaskDetailsDto GetTaskDetails(int taskId)
         {
             var task = _taskRepository.GetById(taskId);

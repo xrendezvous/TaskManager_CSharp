@@ -3,22 +3,22 @@
 namespace TaskManager.Repositories.Interfaces
 {
     /// <summary>
-    /// Defines methods for working with project data in the repository layer.
+    /// defines methods for working with project data in the repository layer
     /// </summary>
     public interface IProjectRepository
     {
         /// <summary>
-        /// Gets all projects.
+        /// gets all projects
         /// </summary>
-        /// <returns>A collection of all project records.</returns>
+        /// <returns>collection of all project records</returns>
         IEnumerable<ProjectRecord> GetAllProjects();
         /// <summary>
-        /// Gets a project by its identifier.
+        /// gets a project by its id
         /// </summary>
-        /// <param name="projectId">The project identifier.</param>
-        /// <returns>The matching project record.</returns>
+        /// <param name="projectId"/>
+        /// <returns>the matching project record</returns>
         /// <exception cref="KeyNotFoundException">
-        /// Thrown when the project with the specified identifier is not found.
+        /// thrown when the project with the specified id is not found
         /// </exception>
         ProjectRecord GetById(int projectId);
     }

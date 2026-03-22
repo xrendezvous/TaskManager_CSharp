@@ -7,7 +7,7 @@ using TaskManager.Services.Interfaces;
 namespace TaskManager.AppUI.ViewModels;
 
 /// <summary>
-/// Represents the view model for the projects list page.
+/// view model for the projects list page
 /// </summary>
 public sealed class ProjectsViewModel : BaseViewModel
 {
@@ -19,10 +19,10 @@ public sealed class ProjectsViewModel : BaseViewModel
     public ICommand OpenProjectCommand { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProjectsViewModel"/> class.
+    /// initializes a new instance of the <see cref="ProjectsViewModel"/> class
     /// </summary>
-    /// <param name="projectService">The service used to load project data.</param>
-    /// <param name="navigationService">The service used for page navigation.</param>
+    /// <param name="projectService">service to load project data</param>
+    /// <param name="navigationService">service for page navigation</param>
     public ProjectsViewModel(
         IProjectService projectService,
         INavigateService navigationService)
@@ -37,7 +37,7 @@ public sealed class ProjectsViewModel : BaseViewModel
     }
 
     /// <summary>
-    /// Loads project data into the observable collection.
+    /// loads project data into the collection
     /// </summary>
     private void LoadProjects()
     {

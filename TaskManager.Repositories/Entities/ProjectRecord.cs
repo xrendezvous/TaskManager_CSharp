@@ -3,7 +3,7 @@
 namespace TaskManager.Repositories.Entities
 {
     /// <summary>
-    /// Represents a project entity stored in the storage layer.
+    /// project entity stored in the storage layer
     /// </summary>
     public sealed class ProjectRecord
     {
@@ -13,12 +13,12 @@ namespace TaskManager.Repositories.Entities
         public TypeOfProject Type { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectRecord"/> class.
+        /// initializes a new instance of the <see cref="ProjectRecord"/> class
         /// </summary>
-        /// <param name="id">The project identifier.</param>
-        /// <param name="name">The project name.</param>
-        /// <param name="desc">The project description.</param>
-        /// <param name="type">The project type.</param>
+        /// <param name="id"/>
+        /// <param name="name"/>
+        /// <param name="desc">project description</param>
+        /// <param name="type"/>
         public ProjectRecord(int id, string name, string desc, TypeOfProject type)
         {
             Id = id;
@@ -28,11 +28,11 @@ namespace TaskManager.Repositories.Entities
         }
 
         /// <summary>
-        /// Updates the mutable project fields.
+        /// updates the project fields
         /// </summary>
-        /// <param name="name">The new project name.</param>
-        /// <param name="desc">The new project description.</param>
-        /// <param name="type">The new project type.</param>
+        /// <param name="name"/>
+        /// <param name="desc"/>
+        /// <param name="type"/>
         public void UpdateRecord(string name, string desc, TypeOfProject type)
         {
             Name = name;
