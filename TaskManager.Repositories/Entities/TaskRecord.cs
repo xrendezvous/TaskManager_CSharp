@@ -1,4 +1,5 @@
-﻿using TaskManager.Repositories.Enums;
+﻿using System.Text.Json.Serialization;
+using TaskManager.Repositories.Enums;
 
 namespace TaskManager.Repositories.Entities
 {
@@ -25,22 +26,24 @@ namespace TaskManager.Repositories.Entities
         /// <param name="priority"/>
         /// <param name="dueDate"/>
         /// <param name="finished">indicates whether the task is finished</param>
+        
+        [JsonConstructor]
         public TaskRecord(
             int id,
             int projectId,
             string name,
-            string desc,
+            string description,
             Priority priority,
             DateTime dueDate,
-            bool finished)
+            bool isFinished)
         {
             Id = id;
             ProjectId = projectId;
             Name = name;
-            Description = desc;
+            Description = description;
             Priority = priority;
             DueDate = dueDate;
-            IsFinished = finished;
+            IsFinished = isFinished;
         }
 
         /// <summary>
@@ -53,16 +56,16 @@ namespace TaskManager.Repositories.Entities
         /// <param name="finished"/>
         public void UpdateRecord(
             string name,
-            string desc,
+            string description,
             Priority priority,
             DateTime dueDate,
-            bool finished)
+            bool isFinished)
         {
             Name = name;
-            Description = desc;
+            Description = description;
             Priority = priority;
             DueDate = dueDate;
-            IsFinished = finished;
+            IsFinished = isFinished;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using TaskManager.Repositories.Enums;
+﻿using System.Text.Json.Serialization;
+using TaskManager.Repositories.Enums;
 
 namespace TaskManager.Repositories.Entities
 {
@@ -19,11 +20,13 @@ namespace TaskManager.Repositories.Entities
         /// <param name="name"/>
         /// <param name="desc">project description</param>
         /// <param name="type"/>
-        public ProjectRecord(int id, string name, string desc, TypeOfProject type)
+        
+        [JsonConstructor]
+        public ProjectRecord(int id, string name, string description, TypeOfProject type)
         {
             Id = id;
             Name = name;
-            Description = desc;
+            Description = description;
             Type = type;
         }
 
@@ -33,10 +36,10 @@ namespace TaskManager.Repositories.Entities
         /// <param name="name"/>
         /// <param name="desc"/>
         /// <param name="type"/>
-        public void UpdateRecord(string name, string desc, TypeOfProject type)
+        public void UpdateRecord(string name, string description, TypeOfProject type)
         {
             Name = name;
-            Description = desc;
+            Description = description;
             Type = type;
         }
     }

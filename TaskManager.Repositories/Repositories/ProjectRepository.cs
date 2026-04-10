@@ -1,40 +1,47 @@
 ﻿using TaskManager.Repositories.Entities;
+using TaskManager.Repositories.Enums;
 using TaskManager.Repositories.Interfaces;
 using TaskManager.Repositories.Storage;
 
 namespace TaskManager.Repositories.Repositories
 {
-    /// <summary>
-    /// access to project data stored in the storage context
-    /// </summary>
     public sealed class ProjectRepository : IProjectRepository
     {
         private readonly IStorageContext _storageContext;
 
-        /// <summary>
-        /// initializes a new instance of the <see cref="ProjectRepository"/> class
-        /// </summary>
-        /// <param name="storageContext">the storage context used to access project data</param>
         public ProjectRepository(IStorageContext storageContext)
         {
             _storageContext = storageContext;
         }
 
-        public IEnumerable<ProjectRecord> GetAllProjects()
+        public async Task<IReadOnlyList<ProjectRecord>> GetAllProjectsAsync()
         {
-            return _storageContext.GetProjects()
-                .OrderBy(p => p.Id)
-                .ToList();
+            return await _storageContext.GetProjectsAsync();
         }
 
-        public ProjectRecord GetById(int projectId)
+        public async Task<ProjectRecord> GetByIdAsync(int projectId)
         {
-            var project = _storageContext.GetProject(projectId);
+            var project = await _storageContext.GetProjectAsync(projectId);
 
             if (project is null)
                 throw new KeyNotFoundException($"Project with ID {projectId} was not found.");
 
             return project;
+        }
+
+        public Task<ProjectRecord> AddAsync(string name, string description, TypeOfProject type)
+        {
+            return _storageContext.AddProjectAsync(name, description, type);
+        }
+
+        public Task UpdateAsync(ProjectRecord project)
+        {
+            return _storageContext.UpdateProjectAsync(project);
+        }
+
+        public Task DeleteAsync(int projectId)
+        {
+            return _storageContext.DeleteProjectAsync(projectId);
         }
     }
 }
