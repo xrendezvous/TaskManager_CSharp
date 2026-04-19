@@ -17,16 +17,19 @@ public static class MauiProgram
 
         builder.UseMauiApp<App>();
 
-        builder.Services.AddSingleton<IStorageContext, DataStorage>();
+        builder.Services.AddSingleton<IStorageContext, JsonStorageContext>();
         builder.Services.AddSingleton<IProjectRepository, ProjectRepository>();
         builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
         builder.Services.AddSingleton<IProjectService, ProjectService>();
         builder.Services.AddSingleton<ITaskService, TaskService>();
         builder.Services.AddSingleton<INavigateService, NavigateService>();
+
         builder.Services.AddSingleton<AppShell>();
+
         builder.Services.AddTransient<ProjectsViewModel>();
         builder.Services.AddTransient<ProjectDetailsViewModel>();
         builder.Services.AddTransient<TaskDetailsViewModel>();
+
         builder.Services.AddTransient<ProjectsPage>();
         builder.Services.AddTransient<ProjectDetailsPage>();
         builder.Services.AddTransient<TaskDetailsPage>();

@@ -15,7 +15,8 @@ namespace TaskManager.Repositories.Storage
 
         public JsonStorageContext()
         {
-            _filePath = Path.Combine(FileSystem.AppDataDirectory, "taskmanager-data.json");
+            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            _filePath = Path.Combine(appDataPath, "taskmanager-data.json");
         }
 
         private async Task EnsureInitializedAsync()

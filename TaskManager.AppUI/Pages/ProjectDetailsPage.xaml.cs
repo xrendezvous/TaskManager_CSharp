@@ -1,14 +1,21 @@
 ﻿using TaskManager.AppUI.ViewModels;
+
 namespace TaskManager.AppUI;
 
-/// <summary>
-/// represents the page that displays detailed information about a project
-/// </summary>
 public partial class ProjectDetailsPage : ContentPage
 {
+    private readonly ProjectDetailsViewModel _viewModel;
+
     public ProjectDetailsPage(ProjectDetailsViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
+        _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.InitializeAsync();
     }
 }
