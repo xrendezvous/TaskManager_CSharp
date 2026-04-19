@@ -4,6 +4,11 @@ using TaskManager.Repositories.Enums;
 
 namespace TaskManager.Repositories.Storage
 {
+    /// <summary>
+    /// implements JSON-based storage context for 
+    /// saving projects and tasks
+    /// in a local app data file
+    /// </summary>
     public sealed class JsonStorageContext : IStorageContext
     {
         private readonly string _filePath;
@@ -13,12 +18,20 @@ namespace TaskManager.Repositories.Storage
             WriteIndented = true
         };
 
+        /// <summary>
+        /// init of a new instance of the <see cref="JsonStorageContext"/> class
+        /// configuration of the path to the local JSON
+        /// </summary>
         public JsonStorageContext()
         {
             var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             _filePath = Path.Combine(appDataPath, "taskmanager-data.json");
         }
 
+        /// <summary>
+        /// checks if the storage file exists and 
+        /// contains initial seed data on first app launch
+        /// </summary>
         private async Task EnsureInitializedAsync()
         {
             if (File.Exists(_filePath))
@@ -55,6 +68,9 @@ namespace TaskManager.Repositories.Storage
             await JsonSerializer.SerializeAsync(createStream, seedData, _jsonOptions);
         }
 
+        /// <summary>
+        /// reads the full data model from the JSON
+        /// </summary>
         private async Task<StorageDataModel> ReadDataAsync()
         {
             await EnsureInitializedAsync();
@@ -64,6 +80,10 @@ namespace TaskManager.Repositories.Storage
             return data ?? new StorageDataModel();
         }
 
+        /// <summary>
+        /// writes the full data model to the JSON
+        /// </summary>
+        /// <param name="data">data model to write</param>
         private async Task WriteDataAsync(StorageDataModel data)
         {
             await using var stream = File.Create(_filePath);

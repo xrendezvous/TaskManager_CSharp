@@ -6,11 +6,20 @@ using TaskManager.Services.Interfaces;
 
 namespace TaskManager.Services.Services
 {
+    /// <summary>
+    /// project-related business logic and transforms 
+    /// repository models into DTOs for the UI layer
+    /// </summary>
     public sealed class ProjectService : IProjectService
     {
         private readonly IProjectRepository _projectRepository;
         private readonly ITaskRepository _taskRepository;
 
+        /// <summary>
+        /// initializes a new instance of the <see cref="ProjectService"/> class
+        /// </summary>
+        /// <param name="projectRepository">repository used to access project data</param>
+        /// <param name="taskRepository">repository used to access task data</param>
         public ProjectService(IProjectRepository projectRepository, ITaskRepository taskRepository)
         {
             _projectRepository = projectRepository;

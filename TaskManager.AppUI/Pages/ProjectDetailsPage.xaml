@@ -43,13 +43,21 @@
                 <HorizontalStackLayout Spacing="10">
                     <Button Text="Edit project"
                             Command="{Binding EditProjectCommand}"
-                            IsEnabled="{Binding IsNotBusy}" />
+                            IsEnabled="{Binding IsNotBusy}"
+                            BackgroundColor="#3B82F6"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="44"
+                            Padding="18,10" />
 
                     <Button Text="Delete project"
                             Command="{Binding DeleteProjectCommand}"
                             IsEnabled="{Binding IsNotBusy}"
-                            BackgroundColor="#FEE2E2"
-                            TextColor="#B91C1C" />
+                            BackgroundColor="#EF4444"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="44"
+                            Padding="18,10" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>
@@ -58,43 +66,133 @@
                              Spacing="10"
                              Margin="0,0,0,14">
 
-            <SearchBar Text="{Binding TaskSearchText}"
-                       Placeholder="Search tasks"
-                       IsEnabled="{Binding IsNotBusy}" />
+            <Border Stroke="#CBD5E1"
+                    StrokeThickness="1.5"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="8,0">
+                <SearchBar Text="{Binding TaskSearchText}"
+                           Placeholder="Search tasks"
+                           IsEnabled="{Binding IsNotBusy}"
+                           BackgroundColor="Transparent"
+                           TextColor="#1E293B"
+                           PlaceholderColor="#94A3B8" />
+            </Border>
 
-            <Grid ColumnDefinitions="*,*,*"
-                  ColumnSpacing="10">
-                <Picker Grid.Column="0"
-                        Title="Priority"
-                        ItemsSource="{Binding PriorityOptions}"
-                        SelectedItem="{Binding SelectedPriorityOption}"
-                        IsEnabled="{Binding IsNotBusy}" />
+            <FlexLayout Direction="Row"
+                        Wrap="Wrap"
+                        JustifyContent="Start"
+                        AlignItems="Center">
 
-                <Picker Grid.Column="1"
-                        Title="Status"
-                        ItemsSource="{Binding StatusOptions}"
-                        SelectedItem="{Binding SelectedStatusOption}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="8"
+                      Margin="0,0,12,8"
+                      MinimumWidthRequest="240">
+                    <Label Grid.Column="0"
+                           Text="Priority"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#475569" />
 
-                <Picker Grid.Column="2"
-                        Title="Sort"
-                        ItemsSource="{Binding SortOptions}"
-                        SelectedItem="{Binding SelectedSortOption}"
-                        IsEnabled="{Binding IsNotBusy}" />
-            </Grid>
+                    <Border Grid.Column="1"
+                            Stroke="#CBD5E1"
+                            StrokeThickness="1.5"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="10,0"
+                            MinimumWidthRequest="150">
+                        <Picker ItemsSource="{Binding PriorityOptions}"
+                                SelectedItem="{Binding SelectedPriorityOption}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="Transparent"
+                                TextColor="#1E293B"
+                                TitleColor="#64748B" />
+                    </Border>
+                </Grid>
+
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="8"
+                      Margin="0,0,12,8"
+                      MinimumWidthRequest="220">
+                    <Label Grid.Column="0"
+                           Text="Status"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#475569" />
+
+                    <Border Grid.Column="1"
+                            Stroke="#CBD5E1"
+                            StrokeThickness="1.5"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="10,0"
+                            MinimumWidthRequest="140">
+                        <Picker ItemsSource="{Binding StatusOptions}"
+                                SelectedItem="{Binding SelectedStatusOption}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="Transparent"
+                                TextColor="#1E293B"
+                                TitleColor="#64748B" />
+                    </Border>
+                </Grid>
+
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="8"
+                      Margin="0,0,0,8"
+                      MinimumWidthRequest="200">
+                    <Label Grid.Column="0"
+                           Text="Sort"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#475569" />
+
+                    <Border Grid.Column="1"
+                            Stroke="#CBD5E1"
+                            StrokeThickness="1.5"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="10,0"
+                            MinimumWidthRequest="130">
+                        <Picker ItemsSource="{Binding SortOptions}"
+                                SelectedItem="{Binding SelectedSortOption}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="Transparent"
+                                TextColor="#1E293B"
+                                TitleColor="#64748B" />
+                    </Border>
+                </Grid>
+            </FlexLayout>
 
             <HorizontalStackLayout Spacing="10">
                 <Button Text="Apply"
                         Command="{Binding ReloadProjectCommand}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="#3B82F6"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="44"
+                        Padding="18,10" />
 
                 <Button Text="Clear"
                         Command="{Binding ClearTaskFiltersCommand}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="#0EA5E9"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="44"
+                        Padding="18,10" />
 
                 <Button Text="Add task"
                         Command="{Binding AddTaskCommand}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="#3B82F6"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="44"
+                        Padding="18,10" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
@@ -161,8 +259,8 @@
 
                                 <Button Text="Delete"
                                         WidthRequest="90"
-                                        BackgroundColor="#FEE2E2"
-                                        TextColor="#B91C1C"
+                                        BackgroundColor="#EF4444"
+                                        TextColor="White"
                                         CornerRadius="12"
                                         IsEnabled="{Binding Source={x:Reference PageRoot}, Path=BindingContext.IsNotBusy}"
                                         Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.DeleteTaskCommand}"

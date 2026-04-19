@@ -2,6 +2,10 @@
 {
     public partial class AppShell : Shell
     {
+        /// <summary>
+        /// init a new instance of the <see cref="AppShell"/> class
+        /// configuration of the main nav structure of the app
+        /// </summary>
         public AppShell(IServiceProvider serviceProvider)
         {
             InitializeComponent();

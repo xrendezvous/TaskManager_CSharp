@@ -74,23 +74,19 @@
                 </Border>
 
                 <HorizontalStackLayout Spacing="12">
-                    <Button Text="Refresh"
-                            Command="{Binding ReloadTaskCommand}"
-                            IsEnabled="{Binding IsNotBusy}" />
-
                     <Button Text="Edit"
                             Command="{Binding EditTaskCommand}"
                             IsEnabled="{Binding IsNotBusy}"
                             BackgroundColor="#3B82F6"
                             TextColor="White"
-                            CornerRadius="10" />
+                            CornerRadius="12" />
 
                     <Button Text="Delete"
                             Command="{Binding DeleteTaskCommand}"
                             IsEnabled="{Binding IsNotBusy}"
-                            BackgroundColor="#FEE2E2"
-                            TextColor="#B91C1C"
-                            CornerRadius="10" />
+                            BackgroundColor="#EF4444"
+                            TextColor="White"
+                            CornerRadius="12" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

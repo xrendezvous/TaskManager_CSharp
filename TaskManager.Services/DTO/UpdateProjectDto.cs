@@ -2,6 +2,9 @@
 
 namespace TaskManager.Services.DTO
 {
+    /// <summary>
+    /// required data to update an existing project
+    /// </summary>
     public sealed class UpdateProjectDto
     {
         public string Name { get; init; } = string.Empty;

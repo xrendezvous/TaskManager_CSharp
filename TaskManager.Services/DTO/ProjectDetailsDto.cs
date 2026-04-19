@@ -2,6 +2,9 @@
 
 namespace TaskManager.Services.DTO
 {
+    /// <summary>
+    /// detailed info about project
+    /// </summary>
     public sealed class ProjectDetailsDto
     {
         public int Id { get; init; }

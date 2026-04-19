@@ -5,6 +5,9 @@ using TaskManager.Repositories.Storage;
 
 namespace TaskManager.Repositories.Repositories
 {
+    /// <summary>
+    /// provides access to task data through the StorageContext
+    /// </summary>
     public sealed class TaskRepository : ITaskRepository
     {
         private readonly IStorageContext _storageContext;

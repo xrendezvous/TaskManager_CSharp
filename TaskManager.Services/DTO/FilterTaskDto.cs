@@ -2,6 +2,9 @@
 
 namespace TaskManager.Services.DTO
 {
+    /// <summary>
+    /// search, filter and sort params for task list
+    /// </summary>
     public sealed class FilterTaskDto
     {
         public string SearchText { get; init; } = string.Empty;

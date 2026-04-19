@@ -20,37 +20,106 @@
                              Spacing="10"
                              Margin="0,0,0,16">
 
-            <SearchBar Text="{Binding SearchText}"
-                       Placeholder="Search projects"
-                       IsEnabled="{Binding IsNotBusy}" />
+            <Border Stroke="#CBD5E1"
+                    StrokeThickness="1.5"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="8,0">
+                <SearchBar Text="{Binding SearchText}"
+                           Placeholder="Search projects"
+                           IsEnabled="{Binding IsNotBusy}"
+                           BackgroundColor="Transparent"
+                           TextColor="#1E293B"
+                           PlaceholderColor="#94A3B8" />
+            </Border>
+            <FlexLayout Direction="Row"
+                        Wrap="Wrap"
+                        JustifyContent="Start"
+                        AlignItems="Center"
+                        BindableLayout.EmptyView="">
 
-            <Grid ColumnDefinitions="*,*"
-                  ColumnSpacing="10">
-                <Picker Grid.Column="0"
-                        Title="Type"
-                        ItemsSource="{Binding TypeOptions}"
-                        SelectedItem="{Binding SelectedTypeOption}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="8"
+                      Margin="0,0,12,8"
+                      MinimumWidthRequest="220">
+                    <Label Grid.Column="0"
+                           Text="Type"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#475569" />
 
-                <Picker Grid.Column="1"
-                        Title="Sort"
-                        ItemsSource="{Binding SortOptions}"
-                        SelectedItem="{Binding SelectedSortOption}"
-                        IsEnabled="{Binding IsNotBusy}" />
-            </Grid>
+                    <Border Grid.Column="1"
+                            Stroke="#CBD5E1"
+                            StrokeThickness="1.5"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="10,0"
+                            MinimumWidthRequest="150">
+                        <Picker ItemsSource="{Binding TypeOptions}"
+                                SelectedItem="{Binding SelectedTypeOption}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="Transparent"
+                                TextColor="#1E293B"
+                                TitleColor="#64748B" />
+                    </Border>
+                </Grid>
+
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="8"
+                      Margin="0,0,0,8"
+                      MinimumWidthRequest="220">
+                    <Label Grid.Column="0"
+                           Text="Sort"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#475569" />
+
+                    <Border Grid.Column="1"
+                            Stroke="#CBD5E1"
+                            StrokeThickness="1.5"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="10,0"
+                            MinimumWidthRequest="150">
+                        <Picker ItemsSource="{Binding SortOptions}"
+                                SelectedItem="{Binding SelectedSortOption}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="Transparent"
+                                TextColor="#1E293B"
+                                TitleColor="#64748B" />
+                    </Border>
+                </Grid>
+            </FlexLayout>
 
             <HorizontalStackLayout Spacing="10">
                 <Button Text="Apply"
                         Command="{Binding ReloadProjectsCommand}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="#3B82F6"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="44"
+                        Padding="18,10" />
 
                 <Button Text="Clear"
                         Command="{Binding ClearFiltersCommand}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="#0EA5E9"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="44"
+                        Padding="18,10" />
 
                 <Button Text="Add"
                         Command="{Binding AddProjectCommand}"
-                        IsEnabled="{Binding IsNotBusy}" />
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="#3B82F6"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="44"
+                        Padding="18,10" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
@@ -101,26 +170,34 @@
                                    TextColor="#3B82F6"
                                    FontAttributes="Bold" />
 
-                            <HorizontalStackLayout HorizontalOptions="End"
-                                                   Spacing="8">
-                                <Button Text="Open"
-                                        WidthRequest="90"
+                            <Grid ColumnDefinitions="*,*"
+                                  ColumnSpacing="8">
+                                <Button Grid.Column="0"
+                                        Text="Open"
                                         BackgroundColor="#3B82F6"
                                         TextColor="White"
                                         CornerRadius="12"
+                                        HeightRequest="40"
+                                        FontSize="13"
+                                        Padding="10,8"
+                                        HorizontalOptions="Fill"
                                         IsEnabled="{Binding Source={x:Reference PageRoot}, Path=BindingContext.IsNotBusy}"
                                         Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.OpenProjectCommand}"
                                         CommandParameter="{Binding Id}" />
 
-                                <Button Text="Delete"
-                                        WidthRequest="90"
-                                        BackgroundColor="#FEE2E2"
-                                        TextColor="#B91C1C"
+                                <Button Grid.Column="1"
+                                        Text="Delete"
+                                        BackgroundColor="#EF4444"
+                                        TextColor="White"
                                         CornerRadius="12"
+                                        HeightRequest="40"
+                                        FontSize="13"
+                                        Padding="10,8"
+                                        HorizontalOptions="Fill"
                                         IsEnabled="{Binding Source={x:Reference PageRoot}, Path=BindingContext.IsNotBusy}"
                                         Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.DeleteProjectCommand}"
                                         CommandParameter="{Binding Id}" />
-                            </HorizontalStackLayout>
+                            </Grid>
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

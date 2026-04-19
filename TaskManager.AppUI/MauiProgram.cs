@@ -25,11 +25,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<INavigateService, NavigateService>();
 
         builder.Services.AddSingleton<AppShell>();
-
         builder.Services.AddTransient<ProjectsViewModel>();
         builder.Services.AddTransient<ProjectDetailsViewModel>();
         builder.Services.AddTransient<TaskDetailsViewModel>();
-
         builder.Services.AddTransient<ProjectsPage>();
         builder.Services.AddTransient<ProjectDetailsPage>();
         builder.Services.AddTransient<TaskDetailsPage>();

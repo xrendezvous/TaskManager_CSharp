@@ -7,6 +7,10 @@ using TaskManager.Services.Interfaces;
 
 namespace TaskManager.AppUI.ViewModels;
 
+/// <summary>
+/// viewmodel for the projects list page,
+/// includes filtering, sorting, navigation, and project management
+/// </summary>
 public sealed class ProjectsViewModel : BaseViewModel
 {
     private readonly IProjectService _projectService;
@@ -16,6 +20,9 @@ public sealed class ProjectsViewModel : BaseViewModel
     private string _selectedTypeOption = "All";
     private string _selectedSortOption = "By Id";
 
+    /// <summary>
+    /// gets the collection of projects displayed
+    /// </summary>
     public ObservableCollection<ProjectListDto> Projects { get; } = new();
 
     public IReadOnlyList<string> TypeOptions { get; } =
@@ -58,6 +65,12 @@ public sealed class ProjectsViewModel : BaseViewModel
     public ICommand OpenProjectCommand { get; }
     public ICommand AddProjectCommand { get; }
     public ICommand DeleteProjectCommand { get; }
+
+    /// <summary>
+    /// initializes a new instance of the <see cref="ProjectsViewModel"/> class
+    /// </summary>
+    /// <param name="projectService">service used to load and modify project data</param>
+    /// <param name="navigationService">service used for navigation between pages</param>
     public ProjectsViewModel(
         IProjectService projectService,
         INavigateService navigationService)
@@ -77,24 +90,32 @@ public sealed class ProjectsViewModel : BaseViewModel
         await LoadProjectsAsync();
     }
 
+    /// <summary>
+    /// loads projects using the busy state wrap
+    /// </summary>
     private async Task LoadProjectsAsync()
     {
-        await RunBusyAsync(async () =>
+        await RunBusyAsync(LoadProjectsCoreAsync);
+    }
+
+    /// <summary>
+    /// loads projects using the current search, filter, and sorting options
+    /// </summary>
+    private async Task LoadProjectsCoreAsync()
+    {
+        Projects.Clear();
+
+        var items = await _projectService.GetProjectsForListAsync(new FilterProjectDto
         {
-            Projects.Clear();
-
-            var items = await _projectService.GetProjectsForListAsync(new FilterProjectDto
-            {
-                SearchText = SearchText,
-                Type = MapTypeFilter(SelectedTypeOption),
-                SortBy = MapProjectSort(SelectedSortOption)
-            });
-
-            foreach (var project in items)
-            {
-                Projects.Add(project);
-            }
+            SearchText = SearchText,
+            Type = MapTypeFilter(SelectedTypeOption),
+            SortBy = MapProjectSort(SelectedSortOption)
         });
+
+        foreach (var project in items)
+        {
+            Projects.Add(project);
+        }
     }
 
     private async Task ClearFiltersAsync()
@@ -105,6 +126,10 @@ public sealed class ProjectsViewModel : BaseViewModel
         await LoadProjectsAsync();
     }
 
+    /// <summary>
+    /// opens the details page for the specified project
+    /// </summary>
+    /// <param name="projectId">identifier of the project to open</param>
     private async Task OpenProjectAsync(int projectId)
     {
         if (IsBusy)
@@ -150,11 +175,11 @@ public sealed class ProjectsViewModel : BaseViewModel
                     Type = type.Value
                 });
 
-                await LoadProjectsAsync();
+                await LoadProjectsCoreAsync();
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
@@ -165,7 +190,7 @@ public sealed class ProjectsViewModel : BaseViewModel
         {
             try
             {
-                var confirmed = await Shell.Current.DisplayAlert(
+                var confirmed = await Shell.Current.DisplayAlertAsync(
                     "Delete project",
                     "Delete this project and all its tasks?",
                     "Delete",
@@ -175,15 +200,20 @@ public sealed class ProjectsViewModel : BaseViewModel
                     return;
 
                 await _projectService.DeleteProjectAsync(projectId);
-                await LoadProjectsAsync();
+                await LoadProjectsCoreAsync();
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
 
+    /// <summary>
+    /// converts the selected project type option string into a null
+    /// project type enum val
+    /// </summary>
+    /// <param name="selected">selected project type option text</param>
     private static TypeOfProject? MapTypeFilter(string selected)
     {
         return selected switch
@@ -196,6 +226,11 @@ public sealed class ProjectsViewModel : BaseViewModel
         };
     }
 
+    /// <summary>
+    /// converts the selected project sorting option string into the 
+    /// corresponding sort enum val
+    /// </summary>
+    /// <param name="selected">selected project sort option text</param>
     private static ProjectSortOption MapProjectSort(string selected)
     {
         return selected switch
@@ -207,9 +242,13 @@ public sealed class ProjectsViewModel : BaseViewModel
         };
     }
 
+    /// <summary>
+    /// lets the user select a project type
+    /// </summary>
+    /// <param name="currentValue">currently selected project type used as fallback</param>
     private static async Task<TypeOfProject?> PickProjectTypeAsync(TypeOfProject? currentValue = null)
     {
-        var selected = await Shell.Current.DisplayActionSheet(
+        var selected = await Shell.Current.DisplayActionSheetAsync(
             "Select project type",
             "Cancel",
             null,

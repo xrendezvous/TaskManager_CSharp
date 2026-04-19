@@ -2,6 +2,9 @@
 
 namespace TaskManager.Services.DTO
 {
+    /// <summary>
+    /// required data to create a new task
+    /// </summary>
     public sealed class CreateTaskDto
     {
         public int ProjectId { get; init; }

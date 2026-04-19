@@ -2,6 +2,9 @@
 
 namespace TaskManager.Services.DTO
 {
+    /// <summary>
+    /// displayed task data in the list
+    /// </summary>
     public sealed class TaskListDto
     {
         public int Id { get; init; }

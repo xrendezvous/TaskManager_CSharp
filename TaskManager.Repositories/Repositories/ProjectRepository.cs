@@ -5,6 +5,9 @@ using TaskManager.Repositories.Storage;
 
 namespace TaskManager.Repositories.Repositories
 {
+    /// <summary>
+    /// provides access to project data through the StorageContext
+    /// </summary>
     public sealed class ProjectRepository : IProjectRepository
     {
         private readonly IStorageContext _storageContext;

@@ -8,6 +8,10 @@ using TaskManager.Services.Interfaces;
 
 namespace TaskManager.AppUI.ViewModels;
 
+/// <summary>
+/// viewmodel for the project details page,
+/// includes project info, task filtering and management
+/// </summary>
 public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IProjectService _projectService;
@@ -29,8 +33,14 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
     private string _selectedStatusOption = "All";
     private string _selectedSortOption = "By Priority";
 
+    /// <summary>
+    /// gets the collection of tasks for the current project
+    /// </summary>
     public ObservableCollection<TaskListDto> Tasks { get; } = new();
 
+    /// <summary>
+    /// gets the available task priorities for filter
+    /// </summary>
     public IReadOnlyList<string> PriorityOptions { get; } =
     [
         "All",
@@ -40,6 +50,9 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         "Critical"
     ];
 
+    /// <summary>
+    /// gets the available task statuses for filter
+    /// </summary>
     public IReadOnlyList<string> StatusOptions { get; } =
     [
         "All",
@@ -48,6 +61,9 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         "Overdue"
     ];
 
+    /// <summary>
+    /// gets the available task sort options for filter
+    /// </summary>
     public IReadOnlyList<string> SortOptions { get; } =
     [
         "By Priority",
@@ -55,42 +71,62 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         "By Name"
     ];
 
+    /// <summary>
+    /// display name of project
+    /// </summary>
     public string ProjectName
     {
         get => _projectName;
         set => SetProperty(ref _projectName, value);
     }
 
+    /// <summary>
+    /// type of project
+    /// </summary>
     public string ProjectTypeText
     {
         get => _projectTypeText;
         set => SetProperty(ref _projectTypeText, value);
     }
 
+    /// <summary>
+    /// description of project
+    /// </summary>
     public string ProjectDescription
     {
         get => _projectDescription;
         set => SetProperty(ref _projectDescription, value);
     }
 
+    /// <summary>
+    /// progress of project
+    /// </summary>
     public string ProjectProgressText
     {
         get => _projectProgressText;
         set => SetProperty(ref _projectProgressText, value);
     }
 
+    /// <summary>
+    /// stats for project
+    /// </summary>
     public string ProjectStatsText
     {
         get => _projectStatsText;
         set => SetProperty(ref _projectStatsText, value);
     }
 
+    /// <summary>
+    /// for searching tasks
+    /// </summary>
     public string TaskSearchText
     {
         get => _taskSearchText;
         set => SetProperty(ref _taskSearchText, value);
     }
 
+    // next three strings are getters/setters
+    // for selected filter options
     public string SelectedPriorityOption
     {
         get => _selectedPriorityOption;
@@ -116,6 +152,13 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
     public ICommand DeleteTaskCommand { get; }
     public ICommand EditProjectCommand { get; }
     public ICommand DeleteProjectCommand { get; }
+
+    /// <summary>
+    /// initializes a new instance of the <see cref="ProjectDetailsViewModel"/> class
+    /// </summary>
+    /// <param name="projectService">service used to load and modify project data</param>
+    /// <param name="taskService">service used to load and modify task data</param>
+    /// <param name="navigationService">service used for app navigation</param>
     public ProjectDetailsViewModel(
         IProjectService projectService,
         ITaskService taskService,
@@ -133,6 +176,11 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         EditProjectCommand = new Command(async () => await EditProjectAsync());
         DeleteProjectCommand = new Command(async () => await DeleteProjectAsync());
     }
+
+    /// <summary>
+    /// applies nav query params passed through Shell routing
+    /// </summary>
+    /// <param name="query">dict containing route query params</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (!query.TryGetValue("projectId", out var value))
@@ -144,6 +192,10 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         _projectId = projectId;
     }
 
+    /// <summary>
+    /// used to initialize the viewmodel by loading
+    /// current project
+    /// </summary>
     public async Task InitializeAsync()
     {
         if (_projectId <= 0)
@@ -152,35 +204,42 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         await LoadProjectAsync();
     }
 
+    /// <summary>
+    /// for loading the currect project and tasks using
+    /// busy state wrap
+    /// </summary>
     private async Task LoadProjectAsync()
     {
         if (_projectId <= 0)
             return;
 
-        await RunBusyAsync(async () =>
-        {
-            try
-            {
-                var project = await _projectService.GetProjectDetailsAsync(_projectId);
-
-                _currentProjectType = project.Type;
-                _currentProjectDescription = project.Description;
-
-                ProjectName = project.Name;
-                ProjectTypeText = $"Type: {project.Type}";
-                ProjectDescription = project.Description;
-                ProjectProgressText = $"Progress: {project.Progress}%";
-                ProjectStatsText = $"Tasks: {project.TasksAmount} | Finished: {project.FinishedTasks}";
-
-                await LoadTasksInternalAsync();
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
-            }
-        });
+        await RunBusyAsync(LoadProjectCoreAsync);
     }
 
+    /// <summary>
+    /// used for automatic refreshing of pages during
+    /// project/tasks management
+    /// </summary>
+    private async Task LoadProjectCoreAsync()
+    {
+        var project = await _projectService.GetProjectDetailsAsync(_projectId);
+
+        _currentProjectType = project.Type;
+        _currentProjectDescription = project.Description;
+
+        ProjectName = project.Name;
+        ProjectTypeText = $"Type: {project.Type}";
+        ProjectDescription = project.Description;
+        ProjectProgressText = $"Progress: {project.Progress}%";
+        ProjectStatsText = $"Tasks: {project.TasksAmount} | Finished: {project.FinishedTasks}";
+
+        await LoadTasksInternalAsync();
+    }
+
+    /// <summary>
+    /// loads tasks for the current proj
+    /// using the selected search, filter, and sort options
+    /// </summary>
     private async Task LoadTasksInternalAsync()
     {
         Tasks.Clear();
@@ -200,6 +259,9 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         }
     }
 
+    /// <summary>
+    /// clears all task filters and reloads project data
+    /// </summary>
     private async Task ClearTaskFiltersAsync()
     {
         TaskSearchText = string.Empty;
@@ -209,6 +271,10 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         await LoadProjectAsync();
     }
 
+    /// <summary>
+    /// opens the details page for the specified task
+    /// </summary>
+    /// <param name="taskId">id of the task to open</param>
     private async Task OpenTaskAsync(int taskId)
     {
         if (IsBusy)
@@ -217,6 +283,10 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         await _navigationService.GoToTaskDetailsAsync(taskId);
     }
 
+    /// <summary>
+    /// asks user for task data, creates a new task 
+    /// and refreshes the current proj view
+    /// </summary>
     private async Task AddTaskAsync()
     {
         if (_projectId <= 0)
@@ -264,22 +334,27 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
                     IsFinished = false
                 });
 
-                await LoadProjectAsync();
+                await LoadProjectCoreAsync();
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
 
+    /// <summary>
+    /// asks the user for confirmation, deletes the selected task
+    /// and refreshes the current proj view
+    /// </summary>
+    /// <param name="taskId">id of the task to delete</param>
     private async Task DeleteTaskAsync(int taskId)
     {
         await RunBusyAsync(async () =>
         {
             try
             {
-                var confirmed = await Shell.Current.DisplayAlert(
+                var confirmed = await Shell.Current.DisplayAlertAsync(
                     "Delete task",
                     "Delete this task?",
                     "Delete",
@@ -289,15 +364,19 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
                     return;
 
                 await _taskService.DeleteTaskAsync(taskId);
-                await LoadProjectAsync();
+                await LoadProjectCoreAsync();
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
 
+    /// <summary>
+    /// asks user to edit the current proj 
+    /// and saves the updated data
+    /// </summary>
     private async Task EditProjectAsync()
     {
         if (_projectId <= 0)
@@ -342,11 +421,15 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
 
+    /// <summary>
+    /// asks the user for confirmation and 
+    /// deletes the current proj
+    /// </summary>
     private async Task DeleteProjectAsync()
     {
         if (_projectId <= 0)
@@ -356,7 +439,7 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         {
             try
             {
-                var confirmed = await Shell.Current.DisplayAlert(
+                var confirmed = await Shell.Current.DisplayAlertAsync(
                     "Delete project",
                     "Delete this project and all its tasks?",
                     "Delete",
@@ -370,11 +453,16 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
 
+    /// <summary>
+    /// converts the selected priority option string 
+    /// into a null priority enum val
+    /// </summary>
+    /// <param name="selected">selected priority option text</param>
     private static Priority? MapPriorityFilter(string selected)
     {
         return selected switch
@@ -387,6 +475,11 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         };
     }
 
+    /// <summary>
+    /// converts the selected status option string 
+    /// into a null finished flag
+    /// </summary>
+    /// <param name="selected">selected status option text</param>
     private static bool? MapStatusToFinishedFlag(string selected)
     {
         return selected switch
@@ -397,6 +490,11 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         };
     }
 
+    /// <summary>
+    /// converts the selected task sort option string 
+    /// into the sort enum val
+    /// </summary>
+    /// <param name="selected">selected sort option text</param>
     private static SortTask MapTaskSort(string selected)
     {
         return selected switch
@@ -407,9 +505,13 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         };
     }
 
+    /// <summary>
+    /// lets the user select a task priority
+    /// </summary>
+    /// <param name="currentValue">currently selected priority val used as fallback</param>
     private static async Task<Priority?> PickPriorityAsync(Priority? currentValue = null)
     {
-        var selected = await Shell.Current.DisplayActionSheet(
+        var selected = await Shell.Current.DisplayActionSheetAsync(
             "Select priority",
             "Cancel",
             null,
@@ -431,9 +533,13 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         };
     }
 
+    /// <summary>
+    /// lets the user select a project type
+    /// </summary>
+    /// <param name="currentValue">currently selected project type used as fallback</param>
     private static async Task<TypeOfProject?> PickProjectTypeAsync(TypeOfProject? currentValue = null)
     {
-        var selected = await Shell.Current.DisplayActionSheet(
+        var selected = await Shell.Current.DisplayActionSheetAsync(
             "Select project type",
             "Cancel",
             null,
@@ -455,12 +561,17 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
         };
     }
 
+    /// <summary>
+    /// asks user to enter a date and parses it using the expected format
+    /// </summary>
+    /// <param name="title">dialog title</param>
+    /// <param name="initialValue">initial date val shown to the user</param>
     private static async Task<DateTime?> PromptDateAsync(string title, DateTime initialValue)
     {
         var input = await Shell.Current.DisplayPromptAsync(
             title,
-            "Enter due date in format yyyy-MM-dd:",
-            initialValue: initialValue.ToString("yyyy-MM-dd"),
+            "Enter due date in format dd-MM-yyyy:",
+            initialValue: initialValue.ToString("dd-MM-yyyy"),
             keyboard: Keyboard.Text);
 
         if (string.IsNullOrWhiteSpace(input))
@@ -468,7 +579,7 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
 
         if (DateTime.TryParseExact(
                 input.Trim(),
-                "yyyy-MM-dd",
+                "dd-MM-yyyy",
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.None,
                 out var exactDate))
@@ -481,7 +592,7 @@ public sealed class ProjectDetailsViewModel : BaseViewModel, IQueryAttributable
             return parsedDate;
         }
 
-        await Shell.Current.DisplayAlert("Invalid date", "Use format yyyy-MM-dd.", "OK");
+        await Shell.Current.DisplayAlertAsync("Invalid date", "Use format dd-MM-yyyy.", "OK");
         return null;
     }
 }

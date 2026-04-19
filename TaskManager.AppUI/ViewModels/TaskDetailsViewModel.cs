@@ -8,6 +8,10 @@ using TaskManager.Services.Interfaces;
 
 namespace TaskManager.AppUI.ViewModels;
 
+/// <summary>
+/// viewmodel for the task details page,
+/// includes task display and management
+/// </summary>
 public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly ITaskService _taskService;
@@ -57,11 +61,13 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
         get => _description;
         set => SetProperty(ref _description, value);
     }
-
-    public ICommand ReloadTaskCommand { get; }
     public ICommand EditTaskCommand { get; }
     public ICommand DeleteTaskCommand { get; }
 
+    /// <summary>
+    /// initializes a new instance of the <see cref="TaskDetailsViewModel"/> class
+    /// </summary>
+    /// <param name="taskService">service used to load and modify task data</param>
     public TaskDetailsViewModel(
         ITaskService taskService,
         INavigateService navigationService)
@@ -69,7 +75,6 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
         _taskService = taskService;
         _navigationService = navigationService;
 
-        ReloadTaskCommand = new Command(async () => await LoadTaskAsync());
         EditTaskCommand = new Command(async () => await EditTaskAsync());
         DeleteTaskCommand = new Command(async () => await DeleteTaskAsync());
     }
@@ -97,30 +102,25 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
         if (_taskId <= 0)
             return;
 
-        await RunBusyAsync(async () =>
-        {
-            try
-            {
-                var task = await _taskService.GetTaskDetailsAsync(_taskId);
+        await RunBusyAsync(LoadTaskCoreAsync);
+    }
 
-                _currentName = task.Name;
-                _currentDescription = task.Description;
-                _currentPriority = task.Priority;
-                _currentDueDate = task.DueDate;
-                _currentIsFinished = task.IsFinished;
+    private async Task LoadTaskCoreAsync()
+    {
+        var task = await _taskService.GetTaskDetailsAsync(_taskId);
 
-                Name = task.Name;
-                PriorityText = $"Priority: {task.Priority}";
-                DueText = $"Due: {task.DueDate:yyyy-MM-dd}";
-                DoneText = $"Finished: {task.IsFinished}";
-                OverdueText = $"Overdue: {task.IsOverdue}";
-                Description = task.Description;
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
-            }
-        });
+        _currentName = task.Name;
+        _currentDescription = task.Description;
+        _currentPriority = task.Priority;
+        _currentDueDate = task.DueDate;
+        _currentIsFinished = task.IsFinished;
+
+        Name = task.Name;
+        PriorityText = $"Priority: {task.Priority}";
+        DueText = $"Due: {task.DueDate:dd-MM-yyyy}";
+        DoneText = $"Finished: {task.IsFinished}";
+        OverdueText = $"Overdue: {task.IsOverdue}";
+        Description = task.Description;
     }
 
     private async Task EditTaskAsync()
@@ -160,7 +160,7 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
                 if (dueDate is null)
                     return;
 
-                var isFinished = await Shell.Current.DisplayAlert(
+                var isFinished = await Shell.Current.DisplayAlertAsync(
                     "Task status",
                     "Mark task as finished?",
                     "Yes",
@@ -175,11 +175,11 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
                     IsFinished = isFinished
                 });
 
-                await LoadTaskAsync();
+                await LoadTaskCoreAsync();
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
@@ -193,7 +193,7 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
         {
             try
             {
-                var confirmed = await Shell.Current.DisplayAlert(
+                var confirmed = await Shell.Current.DisplayAlertAsync(
                     "Delete task",
                     "Delete this task?",
                     "Delete",
@@ -207,14 +207,14 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         });
     }
 
     private static async Task<Priority?> PickPriorityAsync(Priority currentValue)
     {
-        var selected = await Shell.Current.DisplayActionSheet(
+        var selected = await Shell.Current.DisplayActionSheetAsync(
             "Select priority",
             "Cancel",
             null,
@@ -240,8 +240,8 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
     {
         var input = await Shell.Current.DisplayPromptAsync(
             "Edit task",
-            "Enter due date in format yyyy-MM-dd:",
-            initialValue: currentValue.ToString("yyyy-MM-dd"),
+            "Enter due date in format dd-MM-yyyy:",
+            initialValue: currentValue.ToString("dd-MM-yyyy"),
             keyboard: Keyboard.Text);
 
         if (string.IsNullOrWhiteSpace(input))
@@ -249,7 +249,7 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
 
         if (DateTime.TryParseExact(
                 input.Trim(),
-                "yyyy-MM-dd",
+                "dd-MM-yyyy",
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.None,
                 out var exactDate))
@@ -262,7 +262,7 @@ public sealed class TaskDetailsViewModel : BaseViewModel, IQueryAttributable
             return parsedDate;
         }
 
-        await Shell.Current.DisplayAlert("Invalid date", "Use format yyyy-MM-dd.", "OK");
+        await Shell.Current.DisplayAlertAsync("Invalid date", "Use format dd-MM-yyyy.", "OK");
         return null;
     }
 }
